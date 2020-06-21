@@ -9,3 +9,7 @@ Documentation is available on the [documentation site](https://clockworksquirrel
 
 ## Examples
 For examples, please see the [documentation site](https://clockworksquirrel.github.io/basicstate/example/).
+
+## Get in Touch
+Please refer to the [thread on the Roblox Developer Forums](https://devforum.roblox.com/t/basicstate-a-state-management-solution/571355) if you wish to discuss BasicState.
+You can also contact me via direct message [on the DevForums](https://devforum.roblox.com/u/clockworksquirrel).
