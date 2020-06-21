@@ -1,0 +1,15 @@
+{
+  "name": "BasicState",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Modules": {
+        "$className": "Folder",
+        "BasicState": {
+          "$path": "src"
+        }
+      }
+    }
+  }
+}

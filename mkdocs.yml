@@ -1,0 +1,31 @@
+site_name: BasicState
+site_url: https://clockworksquirrel.github.io/BasicState/
+repo_name: ClockworkSquirrel/BasicState
+repo_url: https://github.com/ClockworkSquirrel/BasicState
+
+theme:
+  name: material
+  features:
+    - instant
+  language: en
+  palette:
+    primary: green
+    accent: green
+  font:
+    code: "Fira Code"
+  icon:
+    logo: material/school
+    repo: fontawesome/brands/github-alt
+
+pages:
+  - Home: index.md
+  - Examples: example.md
+  - Documentation: docs.md
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - pymdownx.superfences
+  - toc:
+      permalink: true
