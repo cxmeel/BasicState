@@ -7,10 +7,44 @@ Creates a new state object. Accepts an optional `InitialState` parameter, for de
 
 ## `State:Set()`
 -----
-Sets the value of a given key in the state, and then fires off any `Changed` signals. You should always use this when you need to change the state. Never modify state directly!
+Sets the value of a given key in the state, and then fires off any `Changed` signals. You should always use this when you need to change the state. Never modify state directly, unless using `RawSet`!
 
 ### Syntax
 `State:Set(Key: any, Value: any): void`
+
+## `State:SetState()`
+-----
+Set multiple values in the state. `Changed` signals will be fired for each modified key.
+
+!!! warning
+    Setting sub-tables will fully overwrite their contents in the state. This method uses shallow-merging, which only merges the values at the root of the state. Use :Get() and append/overwrite keys where required, and set the modified table when storing tables.
+
+### Syntax
+`State:SetState(StateTable: Dictionary<any, any>): void`
+
+### Example
+```lua
+local State = BasicState.new({
+    Location = "Mountain",
+    Greetings = {
+        Place = "Welcome to the Mountain!",
+        Roblox = "Hey Roblox!",
+        Me = "Hi ClockworkSquirrel!"
+    }
+})
+
+local function ChangeLocations(NewLocation)
+    local NewGreetings = State:Get("Greetings")
+    NewGreetings.Place = string.format("Hello %s!", NewLocation)
+
+    State:SetState({
+        Location = NewLocation,
+        Greetings = NewGreetings
+    })
+end
+
+ChangeLocations("City")
+```
 
 ## `State:Toggle()`
 -----
