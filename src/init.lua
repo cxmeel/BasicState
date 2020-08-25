@@ -1,10 +1,10 @@
 --[[
 	BasicState by ClockworkSquirrel
-	Version: 0.0.4
+	Version: 0.1.0
 
 	Documentation is at:
 	https://clockworksquirrel.github.io/BasicState/
- ]]
+--]]
 
 local State = {}
 
@@ -12,7 +12,7 @@ local State = {}
 	Helper function which creates a shallow copy of passed tables.
 	Child tables will not be copied, and passed ByRef, meaning
 	modifying them will affect the original copy
- ]]
+--]]
 local function JoinDictionary(...)
 	local NewDictionary = {}
 
@@ -27,64 +27,54 @@ end
 
 --[[
 	Create and return new BasicState instance
- ]]
+--]]
 State.__index = State
 function State.new(InitialState)
 	--[[
 		Copy "State" as it's defined in this module into an empty
 		metatable
-	 ]]
+	--]]
 	local self = setmetatable({}, State)
 
 	--[[
 		Set the state to the value of InitialState, if specified,
 		or an empty table otherwise
-	 ]]
+	--]]
 	self.__state = type(InitialState) == "table" and InitialState or {}
 
 	--[[
 		Create a new BindableEvent, which is triggered when state changes
-	 ]]
+	--]]
 	self.__changeEvent = Instance.new("BindableEvent")
 
 	--[[
 		Assign an empty table which is used to hold an array of BindableEvent
 		instances which are triggered when a specific value is changed, rather
 		than the .Changed event, which is triggered every time state is mutated
-	 ]]
+	--]]
 	self.__bindables = {}
 
 	--[[
 		Set BasicState.Changed as an alias for BasicState.__changeEvent.Event
-	 ]]
+	--]]
 	self.Changed = self.__changeEvent.Event
 
 	--[[
-		Previously used to prevent setting of values on the root BasicState
-		object. Currently unused
-	 ]]
-	--[[
-		self.__newindex = function(self, key, value)
-
-		end
-	 ]]
-
-	--[[
 		Return the new completed BasicState instance
-	 ]]
+	--]]
 	return self
 end
 
 --[[
 	Return a shallow copy of the current stored state
- ]]
+--]]
 function State:GetState()
 	return JoinDictionary(self.__state, {})
 end
 
 --[[
 	Set a value without triggering Changed events
- ]]
+--]]
 function State:RawSet(Key, Value)
 	self.__state[Key] = Value
 end
@@ -92,7 +82,7 @@ end
 --[[
 	Sets a value in the state and triggers Changed events. Will not fire
 	events when the passed value is the same as the already stored value
- ]]
+--]]
 function State:Set(Key, Value)
 	local OldState = self:GetState()
 
@@ -111,7 +101,7 @@ end
 	Be sure to Get() a copy of the currently stored table, overwrite or append
 	relevant keys, and pass the modified table into this method, when setting
 	table values.
- ]]
+--]]
 function State:SetState(StateTable)
 	assert(type(StateTable) == "table")
 
@@ -123,7 +113,7 @@ end
 --[[
 	Retrieve and return a value from the store. Optionally takes a DefaultValue
 	parameter, which will be returned if the stored value is nil
- ]]
+--]]
 function State:Get(Key, DefaultValue)
 	local StateValue = self:GetState()[Key]
 	return type(StateValue) == "nil" and DefaultValue or StateValue
@@ -132,7 +122,7 @@ end
 --[[
 	Allows a stored boolean value to be toggled between true and false. Will throw
 	and error if the stored value is not boolean
- ]]
+--]]
 function State:Toggle(Key)
 	local Value = self:Get(Key)
 
@@ -144,7 +134,7 @@ end
 	Increment a stored number by 1. Optionally takes an Amount parameter, which allows
 	the user to specify how much to increment by, and a Cap parameter, which will
 	prevent the value from exceeding the specified number
- ]]
+--]]
 function State:Increment(Key, Amount, Cap)
 	local Value = self:Get(Key)
 
@@ -161,7 +151,7 @@ end
 	Decrement a stored number by 1. As with the Increment method, optional Amount
 	and Cap parameters may be passed to specify how much to decrement the value by.
 	Setting a Cap prevents the value from falling below the specified number.
- ]]
+--]]
 function State:Decrement(Key, Amount, Cap)
 	local Value = self:Get(Key)
 
@@ -179,7 +169,7 @@ end
 	The returned value is the new BindableEvent's .Event event, to keep consistency
 	with Roblox's :GetPropertyChangedSignal() method, which returns a single
 	RBXScriptConnection
- ]]
+--]]
 function State:GetChangedSignal(Key)
 	local Signal = Instance.new("BindableEvent")
 
@@ -196,7 +186,7 @@ end
 --[[
 	Destroys all BindableEvents created using GetChangedSignal, the .Changed event's
 	BindableEvent, clears the state, and finally the BasicState instance itself
- ]]
+--]]
 function State:Destroy()
 	for _, bindable in next, self.__bindables do
 		bindable:Destroy()
@@ -208,7 +198,62 @@ function State:Destroy()
 end
 
 --[[
+	Wraps a Roact component and injects the given keys into the component's state.
+	The component will be re-rendered when State changes.
+--]]
+function State:Roact(Component, Keys)
+	local ComponentLifecycle = {
+		init = Component.init,
+		willUnmount = Component.willUnmount
+	}
+
+	Component.init = function(this, ...)
+		if ComponentLifecycle.init then
+			ComponentLifecycle.init(this, ...)
+		end
+
+		this.__basicStateBindings = {}
+
+		local InitialState = {}
+
+		if type(Keys) == "table" then
+			for _, Key in next, Keys do
+				InitialState[Key] = self:Get(Key)
+
+				this.__basicStateBindings[Key] = self:GetChangedSignal(Key):Connect(function(NewValue)
+					this:setState({ [Key] = NewValue })
+				end)
+			end
+		else
+			InitialState = self:GetState()
+
+			this.__basicStateBindings[1] = self.Changed:Connect(function()
+				this:setState(self:GetState())
+			end)
+		end
+
+		this:setState(InitialState)
+	end
+
+	Component.willUnmount = function(this, ...)
+		if ComponentLifecycle.willUnmount then
+			ComponentLifecycle.willUnmount(this, ...)
+		end
+
+		if this.__basicStateBindings then
+			for _, Connection in next, this.__basicStateBindings do
+				Connection:Disconnect()
+			end
+
+			this.__basicStateBindings = {}
+		end
+	end
+
+	return Component
+end
+
+--[[
 	Return the State table from the module to allow users to construct new
 	BasicState instances
- ]]
+--]]
 return State

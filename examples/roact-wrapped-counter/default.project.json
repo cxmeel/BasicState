@@ -1,0 +1,13 @@
+{
+  "name": "roact-wrapped-counter",
+  "tree": {
+    "$className": "DataModel",
+    "StarterGui": {
+      "$className": "StarterGui",
+      "RoactWrappedCounter": {
+        "$className": "ScreenGui",
+        "$path": "src"
+      }
+    }
+  }
+}
