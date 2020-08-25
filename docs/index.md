@@ -24,4 +24,5 @@ The easiest method to add BasicState to your project is via the Toolbox.
 
 ### Method 4: Git Submodules
 Follow the instructions in the following Gist to import a GitHub repo as a submodule. This allows you to link modules into your project, and sync updates when they become available:
+
 https://gist.github.com/gitaarik/8735255#adding-a-submodule
