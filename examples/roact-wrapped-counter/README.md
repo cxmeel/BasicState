@@ -1,7 +1,8 @@
+# roact-wrapped-counter
+This example can be synced-in using Rojo or directly inserted by downloading the attached `.rbxm` or `.rbxmx` model file.
+
 # Usage with Roact
 With `v0.1.0`, using BasicState with Roact is as simple as wrapping components with the experimental `:Roact()` method. This overrides the `:init()` and `:willUnmount()` methods of your component to create bindings to your BasicState store, handle state changes, and disconnecting events when unmounting.
-
-This example can be synced-in using Rojo or directly inserted by downloading the attached `.rbxm` or `.rbxmx` model file.
 
 ```lua
 local BasicState = require(path.to.BasicState)
