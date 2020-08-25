@@ -12,9 +12,19 @@ function CounterTextLabel:render()
 	return Roact.createElement("TextLabel", {
 		TextScaled = true,
 		Size = UDim2.fromScale(.5, 1),
-		Text = string.format("%s%d", self.decorator, Store:Get("Count")),
+		--[[
+			Display the value of Count by referencing from the component's
+			state. This is updated when Count changes in the BasicState store,
+			as we wrapped the component using Store:Roact().
+		--]]
+		Text = string.format("%s%d", self.decorator, self.state.Count),
 		LayoutOrder = 1
 	})
 end
 
+--[[
+	Wrap the component in the BasicState store. This component will re-render
+	whenever any value of the BasicState store changes, as we didn't specify
+	which key(s) to listen to. This is not recommended.
+--]]
 return Store:Roact(CounterTextLabel)
