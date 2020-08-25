@@ -2,7 +2,7 @@
 BasicState is a really, really simple key-value based state management solution. It makes use of [BindableEvents](https://developer.roblox.com/en-us/api-reference/class/BindableEvent) to allow your projects to watch for changes in state, and provides a simple API for communication with your state objects. Think [Rodux](https://roblox.github.io/rodux/), but much more simple.
 
 ## Getting Started
-It's easy to get started using BasicState. There are three methods to add BasicState to your project:
+It's easy to get started using BasicState. There are a few methods to add BasicState to your project:
 
 !!! info
     It's recommended that you place the BasicState module in a place like [ReplicatedStorage](https://developer.roblox.com/en-us/api-reference/class/ReplicatedStorage), as it can be used on both the client and server; however, this is not mandatory.
@@ -21,3 +21,7 @@ The easiest method to add BasicState to your project is via the Toolbox.
 * Clone the `/src` directory into your project.
 * Rename the folder to `BasicState`.
 * Sync it into your game using [Rojo](https://github.com/rojo-rbx/rojo).
+
+### Method 4: Git Submodules
+Follow the instructions in the following Gist to import a GitHub repo as a submodule. This allows you to link modules into your project, and sync updates when they become available:
+https://gist.github.com/gitaarik/8735255#adding-a-submodule
