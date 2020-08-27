@@ -7,7 +7,7 @@ Creates a new state object. Accepts an optional `InitialState` parameter, for de
 
 ## `State:Set()`
 -----
-Sets the value of a given key in the state, and then fires off any `Changed` signals. You should always use this when you need to change the state. Never modify state directly, unless using `RawSet`!
+Sets the value of a given key in the state, and then fires off any `Changed` signals. You should always use this when you need to change the state. Use `:RawSet()` to change values without invoking change events.
 
 ### Syntax
 `State:Set(Key: any, Value: any): void`
@@ -15,9 +15,6 @@ Sets the value of a given key in the state, and then fires off any `Changed` sig
 ## `State:SetState()`
 -----
 Set multiple values in the state. `Changed` signals will be fired for each modified key.
-
-!!! warning
-    Setting sub-tables will fully overwrite their contents in the state. This method uses shallow-merging, which only merges the values at the root of the state. Use :Get() and append/overwrite keys where required, and set the modified table when storing tables.
 
 ### Syntax
 `State:SetState(StateTable: Dictionary<any, any>): void`
@@ -29,21 +26,29 @@ local State = BasicState.new({
     Greetings = {
         Place = "Welcome to the Mountain!",
         Roblox = "Hey Roblox!",
-        Me = "Hi ClockworkSquirrel!"
+        Me = "Hi csqrl!"
     }
 })
 
-local function ChangeLocations(NewLocation)
-    local NewGreetings = State:Get("Greetings")
-    NewGreetings.Place = string.format("Hello %s!", NewLocation)
+State:SetState({
+    Location = "City",
+    Greetings = {
+        Place = "Welcome to the City!"
+    }
+})
 
-    State:SetState({
-        Location = NewLocation,
-        Greetings = NewGreetings
-    })
-end
+--[[
+    The new state object will look like this:
 
-ChangeLocations("City")
+    {
+        Location = "City",
+        Greetings = {
+            Place = "Welcome to the City!",
+            Roblox = "Hey Roblox!",
+            Me = "Hi csqrl!"
+        }
+    }
+--]]
 ```
 
 ## `State:Toggle()`
@@ -86,7 +91,7 @@ local State = BasicState.new({
 local function BuyItem(ItemName, ItemPrice)
     -- A cap of 0 was specified to prevent Money from going below 0
     State:Decrement("Money", ItemPrice, 0)
-    print(("Bought %s for %d"):format(ItemName, ItemPrice))
+    print(string.format("Bought %s for %d", ItemName, ItemPrice))
 end
 
 BuyItem("Noodles", 12)
@@ -163,6 +168,9 @@ There's a full example within the `/examples` directory on how to use BasicState
 ## `State.Changed`
 -----
 An [RBXScriptSignal](https://developer.roblox.com/en-us/api-reference/datatype/RBXScriptSignal) which is fired any time the state mutates. The Event fires with the following values (in order):
+
+!!! warning
+    Using `:GetChangedSignal()` is the preferred method for listening to state changes.
 
 | Name          | Type                             | Description                                               |
 |-----------------|--------------------------------|-------------------------------------------------------|

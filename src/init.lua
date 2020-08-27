@@ -1,23 +1,51 @@
 --[[
-	BasicState by ClockworkSquirrel
-	Version: 0.1.0
+	BasicState by csqrl (ClockworkSquirrel)
+	Version: 0.1.1
 
 	Documentation is at:
 	https://clockworksquirrel.github.io/BasicState/
+
+	Overview of Methods:
+		BasicState.new([ InitialState: Dictionary<any, any> = {} ]): State
+
+		State:Set(Key: any, Value: any): void
+		State:SetState(StateTable: Dictionary<any, any>): void
+		State:Toggle(Key: any): void
+		State:Increment(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
+		State:Decrement(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
+		State:RawSet(Key: any, Value: any): void
+		State:Get(Key: any[, DefaultValue: any = nil]): any
+		State:GetState(): Dictionary<any, any>
+		State:GetChangedSignal(Key: any): RBXScriptSignal
+		State:Destroy(): void
+		State:Roact(Component: Roact.Component[, Keys: any[] = nil]): Roact.Component
+
+		State.Changed: RBXScriptSignal
 --]]
 
 local State = {}
 
 --[[
-	Helper function which creates a shallow copy of passed tables.
-	Child tables will not be copied, and passed ByRef, meaning
-	modifying them will affect the original copy
+	Helper function which creates a deep copy of passed tables.
+
+	In v0.1.1, JoinDictionary now performs a deep copy of tables. This
+	allows nested tables within state to be modified without losing
+	original data.
 --]]
 local function JoinDictionary(...)
 	local NewDictionary = {}
 
 	for _, Dictionary in next, { ... } do
+		if (type(Dictionary) ~= "table") then
+			continue
+		end
+
 		for Key, Value in next, Dictionary do
+			if (type(Value) == "table") then
+				NewDictionary[Key] = JoinDictionary(NewDictionary[Key], Value)
+				continue
+			end
+
 			NewDictionary[Key] = Value
 		end
 	end
@@ -66,7 +94,7 @@ function State.new(InitialState)
 end
 
 --[[
-	Return a shallow copy of the current stored state
+	Return a deep copy of the current stored state
 --]]
 function State:GetState()
 	return JoinDictionary(self.__state, {})
@@ -86,6 +114,10 @@ end
 function State:Set(Key, Value)
 	local OldState = self:GetState()
 
+	if (type(Value) == "table") then
+		Value = JoinDictionary(OldState[Key], Value)
+	end
+
 	if (OldState[Key] ~= Value) then
 		self:RawSet(Key, Value)
 		self.__changeEvent:Fire(OldState, Key)
@@ -94,13 +126,8 @@ end
 
 --[[
 	Like React's setState method, SetState accepts a table of key-value pairs,
-	which will be added to or mutated in the store. This is a shallow-merge,
-	and therefore sub-tables will be fully overwritten by whatever value
-	is specified using this method.
-
-	Be sure to Get() a copy of the currently stored table, overwrite or append
-	relevant keys, and pass the modified table into this method, when setting
-	table values.
+	which will be added to or mutated in the store. This is a deep copy, so
+	original data will not be overwritten unless specified.
 --]]
 function State:SetState(StateTable)
 	assert(type(StateTable) == "table")
