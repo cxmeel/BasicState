@@ -1,5 +1,5 @@
 --[[
-	BasicState by csqrl
+	BasicState by csqrl (ClockworkSquirrel)
 	Version: 0.1.1
 
 	Documentation is at:
@@ -26,9 +26,7 @@
 local State = {}
 
 --[[
-	Helper function which creates a s̶h̶a̶l̶l̶o̶w̶ deep copy of passed tables.
-	C̶h̶i̶l̶d̶ ̶t̶a̶b̶l̶e̶s̶ ̶w̶i̶l̶l̶ ̶n̶o̶t̶ ̶b̶e̶ ̶c̶o̶p̶i̶e̶d̶,̶ ̶a̶n̶d̶ ̶p̶a̶s̶s̶e̶d̶ ̶B̶y̶R̶e̶f̶,̶ ̶m̶e̶a̶n̶i̶n̶g̶
-̶	 m̶o̶d̶i̶f̶y̶i̶n̶g̶ ̶t̶h̶e̶m̶ ̶w̶i̶l̶l̶ ̶a̶f̶f̶e̶c̶t̶ ̶t̶h̶e̶ ̶o̶r̶i̶g̶i̶n̶a̶l̶ ̶c̶o̶p̶y̶.̶
+	Helper function which creates a deep copy of passed tables.
 
 	In v0.1.1, JoinDictionary now performs a deep copy of tables. This
 	allows nested tables within state to be modified without losing
@@ -96,7 +94,7 @@ function State.new(InitialState)
 end
 
 --[[
-	Return a shallow copy of the current stored state
+	Return a deep copy of the current stored state
 --]]
 function State:GetState()
 	return JoinDictionary(self.__state, {})
@@ -128,13 +126,8 @@ end
 
 --[[
 	Like React's setState method, SetState accepts a table of key-value pairs,
-	which will be added to or mutated in the store. This is a shallow-merge,
-	and therefore sub-tables will be fully overwritten by whatever value
-	is specified using this method.
-
-	Be sure to Get() a copy of the currently stored table, overwrite or append
-	relevant keys, and pass the modified table into this method, when setting
-	table values.
+	which will be added to or mutated in the store. This is a deep copy, so
+	original data will not be overwritten unless specified.
 --]]
 function State:SetState(StateTable)
 	assert(type(StateTable) == "table")
