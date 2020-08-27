@@ -1,9 +1,26 @@
 --[[
-	BasicState by ClockworkSquirrel
-	Version: 0.1.0
+	BasicState by csqrl
+	Version: 0.1.1
 
 	Documentation is at:
 	https://clockworksquirrel.github.io/BasicState/
+
+	Overview of Methods:
+		BasicState.new([ InitialState: Dictionary<any, any> = {} ]): State
+
+		State:Set(Key: any, Value: any): void
+		State:SetState(StateTable: Dictionary<any, any>): void
+		State:Toggle(Key: any): void
+		State:Increment(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
+		State:Decrement(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
+		State:RawSet(Key: any, Value: any): void
+		State:Get(Key: any[, DefaultValue: any = nil]): any
+		State:GetState(): Dictionary<any, any>
+		State:GetChangedSignal(Key: any): RBXScriptSignal
+		State:Destroy(): void
+		State:Roact(Component: Roact.Component[, Keys: any[] = nil]): Roact.Component
+
+		State.Changed: RBXScriptSignal
 --]]
 
 local State = {}
@@ -85,6 +102,10 @@ end
 --]]
 function State:Set(Key, Value)
 	local OldState = self:GetState()
+
+	if (type(Value) == "table") then
+		Value = JoinDictionary(Value)
+	end
 
 	if (OldState[Key] ~= Value) then
 		self:RawSet(Key, Value)
