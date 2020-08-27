@@ -26,15 +26,28 @@
 local State = {}
 
 --[[
-	Helper function which creates a shallow copy of passed tables.
-	Child tables will not be copied, and passed ByRef, meaning
-	modifying them will affect the original copy
+	Helper function which creates a s̶h̶a̶l̶l̶o̶w̶ deep copy of passed tables.
+	C̶h̶i̶l̶d̶ ̶t̶a̶b̶l̶e̶s̶ ̶w̶i̶l̶l̶ ̶n̶o̶t̶ ̶b̶e̶ ̶c̶o̶p̶i̶e̶d̶,̶ ̶a̶n̶d̶ ̶p̶a̶s̶s̶e̶d̶ ̶B̶y̶R̶e̶f̶,̶ ̶m̶e̶a̶n̶i̶n̶g̶
+̶	 m̶o̶d̶i̶f̶y̶i̶n̶g̶ ̶t̶h̶e̶m̶ ̶w̶i̶l̶l̶ ̶a̶f̶f̶e̶c̶t̶ ̶t̶h̶e̶ ̶o̶r̶i̶g̶i̶n̶a̶l̶ ̶c̶o̶p̶y̶.̶
+
+	In v0.1.1, JoinDictionary now performs a deep copy of tables. This
+	allows nested tables within state to be modified without losing
+	original data.
 --]]
 local function JoinDictionary(...)
 	local NewDictionary = {}
 
 	for _, Dictionary in next, { ... } do
+		if (type(Dictionary) ~= "table") then
+			continue
+		end
+
 		for Key, Value in next, Dictionary do
+			if (type(Value) == "table") then
+				NewDictionary[Key] = JoinDictionary(NewDictionary[Key], Value)
+				continue
+			end
+
 			NewDictionary[Key] = Value
 		end
 	end
@@ -104,7 +117,7 @@ function State:Set(Key, Value)
 	local OldState = self:GetState()
 
 	if (type(Value) == "table") then
-		Value = JoinDictionary(Value)
+		Value = JoinDictionary(OldState[Key], Value)
 	end
 
 	if (OldState[Key] ~= Value) then
