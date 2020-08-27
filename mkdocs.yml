@@ -5,7 +5,7 @@ site_description: A really simple state management solution for Roblox
 repo_name: ClockworkSquirrel/BasicState
 repo_url: https://github.com/ClockworkSquirrel/BasicState
 google_analytics: [ "UA-145876682-4", "clockworksquirrel.github.io/BasicState" ]
-copyright: MIT
+copyright: ©2020 - csqrl (ClockworkSquirrel)
 
 theme:
   name: material
