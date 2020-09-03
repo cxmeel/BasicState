@@ -1,6 +1,9 @@
 # BasicState
 BasicState is a really, really simple key-value based state management solution. It makes use of [BindableEvents](https://developer.roblox.com/en-us/api-reference/class/BindableEvent) to allow your projects to watch for changes in state, and provides a simple API for communication with your state objects. Think [Rodux](https://roblox.github.io/rodux/), but much more simple.
 
+## Community
+Special thanks to the contributors of this project! You've made some great improvements and added some awesome features. 😁
+
 ## Getting Started
 It's easy to get started using BasicState. There are a few methods to add BasicState to your project:
 

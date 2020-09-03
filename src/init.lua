@@ -1,6 +1,9 @@
 --[[
 	BasicState by csqrl (ClockworkSquirrel)
-	Version: 0.1.1
+	Version: 0.2.0
+
+	Other Contributors:
+	https://github.com/ClockworkSquirrel/BasicState/graphs/contributors
 
 	Documentation is at:
 	https://clockworksquirrel.github.io/BasicState/

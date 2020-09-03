@@ -99,7 +99,7 @@ BuyItem("Noodles", 12)
 
 ## `State:RawSet()`
 -----
-Sets a value in the store without firing any `.Changed` (or `:GetChangedSignal`) events.
+Sets a value in the store without firing any `.Changed` (or `:GetChangedSignal`) events. `:RawSet()` will also ignore the value of `ProtectType`, so be careful when dealing with type-sensitive data.
 
 ### Syntax
 `State:RawSet(Key: any, Value: any): void`
@@ -193,4 +193,25 @@ State.Changed:Connect(function(OldState, Key)
 end)
 
 State:Set("Hello", "Roblox")
+```
+
+## `State.ProtectType`
+-----
+A boolean value which determines whether strict type-checking is enabled on the state table. This prevents changing the type of stored data, e.g. from a number to a string. This is **disabled** by default.
+
+To enable type-safety, simply set this property to true after initialising a new BasicState instance: `State.ProtectType = true`.
+
+Using `:RawSet()` will ignore type-checking.
+
+### Syntax
+`State.ProtectType: boolean`
+
+### Example
+```lua
+local State = BasicState.new({
+    Hello = "World"
+})
+
+State.ProtectType = true
+State:Set("Hello", 1234) --> Will throw an error: A string was expected, but it received a number.
 ```
