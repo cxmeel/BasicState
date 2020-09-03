@@ -68,6 +68,19 @@ function State.new(InitialState)
 	self.ProtectType = false
 
 	--[[
+		Handle firing bindables created from State:GetChangedSignal
+
+		Added by @boatbomber in v0.2.0
+	--]]
+	self.Changed:Connect(function(OldState, ChangedKey)
+		local Signal = self.__bindables[ChangedKey]
+
+		if Signal then
+			Signal:Fire(self:Get(ChangedKey), OldState[ChangedKey], OldState)
+		end
+	end)
+
+	--[[
 		Return the new completed BasicState instance
 	--]]
 	return self
@@ -223,15 +236,15 @@ end
 	RBXScriptConnection
 --]]
 function State:GetChangedSignal(Key)
-	local Signal = Instance.new("BindableEvent")
+	local Signal = self.__bindables[Key]
 
-	self.Changed:Connect(function(OldState, ChangedKey)
-		if (Key == ChangedKey) then
-			Signal:Fire(self:Get(Key), OldState[Key], OldState)
-		end
-	end)
+	if Signal then
+		return Signal.Event
+	end
 
-	self.__bindables[#self.__bindables + 1] = Signal
+	Signal = Instance.new("BindableEvent")
+	self.__bindables[Key] = Signal
+
 	return Signal.Event
 end
 
