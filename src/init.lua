@@ -73,7 +73,7 @@ function State.new(InitialState)
 
 			for Key, Value in next, Dictionary do
 				if (type(Value) == "table") then
-					NewDictionary[Key] = self.__joinDictionary(NewDictionary[Key], Value)
+					NewDictionary[Key] = self:__joinDictionary(NewDictionary[Key], Value)
 					continue
 				end
 
@@ -107,7 +107,7 @@ end
 	Return a deep copy of the current stored state
 --]]
 function State:GetState()
-	return self.__joinDictionary(self.__state, {})
+	return self:__joinDictionary(self.__state, {})
 end
 
 --[[
@@ -131,7 +131,7 @@ function State:Set(Key, Value)
 	end
 
 	if (type(Value) == "table") then
-		Value = self.__joinDictionary(OldState[Key], Value)
+		Value = self:__joinDictionary(OldState[Key], Value)
 	end
 
 	if (OldState[Key] ~= Value) then
