@@ -21,37 +21,10 @@
 		State:Roact(Component: Roact.Component[, Keys: any[] = nil]): Roact.Component
 
 		State.Changed: RBXScriptSignal
+		State.ProtectType: boolean
 --]]
 
 local State = {}
-
---[[
-	Helper function which creates a deep copy of passed tables.
-
-	In v0.1.1, JoinDictionary now performs a deep copy of tables. This
-	allows nested tables within state to be modified without losing
-	original data.
---]]
-local function JoinDictionary(...)
-	local NewDictionary = {}
-
-	for _, Dictionary in next, { ... } do
-		if (type(Dictionary) ~= "table") then
-			continue
-		end
-
-		for Key, Value in next, Dictionary do
-			if (type(Value) == "table") then
-				NewDictionary[Key] = JoinDictionary(NewDictionary[Key], Value)
-				continue
-			end
-
-			NewDictionary[Key] = Value
-		end
-	end
-
-	return NewDictionary
-end
 
 --[[
 	Create and return new BasicState instance
@@ -83,9 +56,46 @@ function State.new(InitialState)
 	self.__bindables = {}
 
 	--[[
+		Helper function which creates a deep copy of passed tables.
+		It's stored inside State so that it can access self for property checks.
+
+		In v0.1.1, JoinDictionary now performs a deep copy of tables. This
+		allows nested tables within state to be modified without losing
+		original data.
+	--]]
+	self.__joinDictionary = function(...)
+		local NewDictionary = {}
+
+		for _, Dictionary in next, { ... } do
+			if (type(Dictionary) ~= "table") then
+				continue
+			end
+
+			for Key, Value in next, Dictionary do
+				if (type(Value) == "table") then
+					NewDictionary[Key] = self.__joinDictionary(NewDictionary[Key], Value)
+					continue
+				end
+
+				if self.ProtectType and NewDictionary[Key] ~= nil and typeof(NewDictionary[Key]) ~= typeof(Value) then
+					error("Attempted to set "..Key.." to new value type '"..typeof(Value).."'. Disable State.ProtectType if you want to allow this.", 2)
+				end
+				NewDictionary[Key] = Value
+			end
+		end
+
+		return NewDictionary
+	end
+
+	--[[
 		Set BasicState.Changed as an alias for BasicState.__changeEvent.Event
 	--]]
 	self.Changed = self.__changeEvent.Event
+
+	--[[
+		Set BasicState.ProtectType to default to false to allow dynamically changing state types
+	--]]
+	self.ProtectType = false
 
 	--[[
 		Return the new completed BasicState instance
@@ -97,11 +107,11 @@ end
 	Return a deep copy of the current stored state
 --]]
 function State:GetState()
-	return JoinDictionary(self.__state, {})
+	return self.__joinDictionary(self.__state, {})
 end
 
 --[[
-	Set a value without triggering Changed events
+	Set a value without triggering Changed events and bypasses ProtectType
 --]]
 function State:RawSet(Key, Value)
 	self.__state[Key] = Value
@@ -114,8 +124,14 @@ end
 function State:Set(Key, Value)
 	local OldState = self:GetState()
 
+	if self.ProtectType then
+		if OldState[Key] ~= nil and typeof(Value) ~= typeof(OldState[Key]) then
+			error("Attempted to set "..Key.." to new value type '"..typeof(Value).."'. Disable State.ProtectType if you want to allow this.", 2)
+		end
+	end
+
 	if (type(Value) == "table") then
-		Value = JoinDictionary(OldState[Key], Value)
+		Value = self.__joinDictionary(OldState[Key], Value)
 	end
 
 	if (OldState[Key] ~= Value) then
