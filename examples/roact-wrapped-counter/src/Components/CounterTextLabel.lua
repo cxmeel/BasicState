@@ -9,6 +9,8 @@ function CounterTextLabel:init(props)
 end
 
 function CounterTextLabel:render()
+	local Count = self.state.Count
+
 	return Roact.createElement("TextLabel", {
 		TextScaled = true,
 		Size = UDim2.fromScale(.5, 1),
@@ -17,7 +19,7 @@ function CounterTextLabel:render()
 			state. This is updated when Count changes in the BasicState store,
 			as we wrapped the component using Store:Roact().
 		--]]
-		Text = string.format("%s%d", self.decorator, self.state.Count),
+		Text = Count and string.format("%s%d", self.decorator, Count) or tostring(Count),
 		LayoutOrder = 1
 	})
 end

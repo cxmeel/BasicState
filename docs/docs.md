@@ -51,6 +51,24 @@ State:SetState({
 --]]
 ```
 
+## `State:Delete()`
+-----
+Deletes a key from the store by setting its value to `State.None` (internally converted to `nil`).
+
+### Syntax
+`State:Delete(Key: any): void`
+
+### Example
+```lua
+local State = BasicState.new({
+    Hello = "World"
+})
+
+State:Delete("Hello")
+
+print(State:Get("Hello")) --> nil
+```
+
 ## `State:Toggle()`
 -----
 Toggles a stored Boolean value between `true` and `false`. Will throw an error if the stored value is not a Boolean.
@@ -214,4 +232,22 @@ local State = BasicState.new({
 
 State.ProtectType = true
 State:Set("Hello", 1234) --> Will throw an error: A string was expected, but it received a number.
+```
+
+## `State.None`
+-----
+Lua is unable to determine whether a value in a table is `nil` or `undefined`, and removes `nil` values from tables as a result. `State.None` is designed to stand in to enable you to remove keys from the state object, which was previously impossible without. It can be used directly with `:Set`, `:SetState` or `:RawSet`, or by using `:Delete` to remove a single key.
+
+### Syntax
+`State.None: userdata`
+
+### Example
+```lua
+State:Delete("Hello")
+```
+
+```lua
+State:SetState({
+    Hello = State.None,
+})
 ```

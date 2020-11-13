@@ -63,7 +63,18 @@ function App:render()
 			--]]
 			[Roact.Event.MouseButton1Click] = function()
 				Store:Toggle("ShowApp")
-			end
+			end,
+
+			--[[
+				Right click to delete the "Count" key from the store, and
+				replace it 2s later.
+			]]
+			[Roact.Event.MouseButton2Click] = function()
+				Store:Delete("Count")
+
+				wait(2)
+				Store:Set("Count", 0)
+			end,
 		}),
 
 		--[[

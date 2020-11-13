@@ -11,23 +11,31 @@
 	Overview of Methods:
 		BasicState.new([ InitialState: Dictionary<any, any> = {} ]): State
 
+		State:Get(Key: any[, DefaultValue: any = nil]): any
 		State:Set(Key: any, Value: any): void
+		State:Delete(Key: any): void
+		State:GetState(): Dictionary<any, any>
 		State:SetState(StateTable: Dictionary<any, any>): void
 		State:Toggle(Key: any): void
 		State:Increment(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
 		State:Decrement(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
 		State:RawSet(Key: any, Value: any): void
-		State:Get(Key: any[, DefaultValue: any = nil]): any
-		State:GetState(): Dictionary<any, any>
 		State:GetChangedSignal(Key: any): RBXScriptSignal
-		State:Destroy(): void
 		State:Roact(Component: Roact.Component[, Keys: any[] = nil]): Roact.Component
+		State:Destroy(): void
 
 		State.Changed: RBXScriptSignal
+
 		State.ProtectType: boolean
+		State.None: Instance
 --]]
 
 local State = {}
+
+State.None = newproxy(true)
+getmetatable(State.None).__tostring = function()
+	return "BasicState.None"
+end
 
 --[[
 	Create and return new BasicState instance
@@ -101,19 +109,23 @@ function State:__joinDictionary(...)
 	local NewDictionary = {}
 
 	for _, Dictionary in next, { ... } do
-		if (type(Dictionary) ~= "table") then
+		if type(Dictionary) ~= "table" then
 			continue
 		end
 
 		for Key, Value in next, Dictionary do
-			if (self.ProtectType and NewDictionary[Key] and typeof(NewDictionary[Key]) ~= typeof(Value)) then
+			if Value == State.None then
+				continue
+			end
+
+			if self.ProtectType and NewDictionary[Key] and typeof(NewDictionary[Key]) ~= typeof(Value) then
 				error(
 					string.format("attempt to set \"%s\" to new value type \"%s\". Disable State.ProtectType to allow this.", tostring(Key), typeof(Value)),
 					2
 				)
 			end
 
-			if (type(Value) == "table") then
+			if type(Value) == "table" then
 				NewDictionary[Key] = self:__joinDictionary(NewDictionary[Key], Value)
 				continue
 			end
@@ -146,8 +158,8 @@ end
 function State:Set(Key, Value)
 	local OldState = self:GetState()
 
-	if (self.ProtectType) then
-		if (OldState[Key] and typeof(Value) ~= typeof(OldState[Key])) then
+	if self.ProtectType then
+		if OldState[Key] and typeof(Value) ~= typeof(OldState[Key]) then
 			error(
 				string.format("attempt to set \"%s\" to new value type \"%s\". Disable State.ProtectType to allow this.", tostring(Key), typeof(Value)),
 				2
@@ -155,11 +167,11 @@ function State:Set(Key, Value)
 		end
 	end
 
-	if (type(Value) == "table") then
+	if type(Value) == "table" then
 		Value = self:__joinDictionary(OldState[Key], Value)
 	end
 
-	if (OldState[Key] ~= Value) then
+	if OldState[Key] ~= Value then
 		self:RawSet(Key, Value)
 		self.__changeEvent:Fire(OldState, Key)
 	end
@@ -184,7 +196,19 @@ end
 --]]
 function State:Get(Key, DefaultValue)
 	local StateValue = self:GetState()[Key]
+
+	if StateValue == State.None then
+		StateValue = nil
+	end
+
 	return type(StateValue) == "nil" and DefaultValue or StateValue
+end
+
+--[[
+	Delete a key from the store by setting its value to BasicState.None.
+--]]
+function State:Delete(Key)
+	return self:Set(Key, State.None)
 end
 
 --[[
@@ -210,7 +234,10 @@ function State:Increment(Key, Amount, Cap)
 	assert(type(Value) == "number")
 
 	local NewValue = Value + Amount
-	if (Cap) then NewValue = math.min(NewValue, Cap) end
+
+	if Cap then
+		NewValue = math.min(NewValue, Cap)
+	end
 
 	return self:Set(Key, NewValue)
 end
@@ -227,7 +254,10 @@ function State:Decrement(Key, Amount, Cap)
 	assert(type(Value) == "number")
 
 	local NewValue = Value - Amount
-	if (Cap) then NewValue = math.max(NewValue, Cap) end
+
+	if Cap then
+		NewValue = math.max(NewValue, Cap)
+	end
 
 	return self:Set(Key, NewValue)
 end
@@ -275,6 +305,8 @@ function State:Roact(Component, Keys)
 		willUnmount = Component.willUnmount
 	}
 
+	Component.__bsIsUnmounting = false
+
 	Component.init = function(this, ...)
 		if ComponentLifecycle.init then
 			ComponentLifecycle.init(this, ...)
@@ -296,6 +328,10 @@ function State:Roact(Component, Keys)
 			InitialState = self:GetState()
 
 			this.__basicStateBindings[1] = self.Changed:Connect(function()
+				if this.__bsIsUnmounting then
+					return
+				end
+
 				this:setState(self:GetState())
 			end)
 		end
@@ -304,6 +340,8 @@ function State:Roact(Component, Keys)
 	end
 
 	Component.willUnmount = function(this, ...)
+		this.__bsIsUnmounting = true
+
 		if ComponentLifecycle.willUnmount then
 			ComponentLifecycle.willUnmount(this, ...)
 		end
