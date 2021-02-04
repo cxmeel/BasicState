@@ -2,24 +2,41 @@ site_name: BasicState
 site_url: https://clockworksquirrel.github.io/BasicState/
 site_author: csqrl
 site_description: A really simple state management solution for Roblox
+
 repo_name: ClockworkSquirrel/BasicState
 repo_url: https://github.com/ClockworkSquirrel/BasicState
-google_analytics: [ "UA-145876682-4", "clockworksquirrel.github.io/BasicState" ]
-copyright: ©2020 - csqrl (ClockworkSquirrel)
+edit_uri: edit/default/docs
+
+copyright: ©2021 - csqrl (ClockworkSquirrel)
+use_directory_urls: true
+
 
 theme:
   name: material
+  logo: https://raw.githubusercontent.com/ClockworkSquirrel/BasicState/default/bs-favicon.svg
+  favicon: https://raw.githubusercontent.com/ClockworkSquirrel/BasicState/default/bs-favicon.png
   features:
     - instant
   language: en
   palette:
     primary: green
     accent: green
+    scheme: preference
   font:
     code: "Fira Code"
   icon:
     logo: material/school
     repo: fontawesome/brands/github-alt
+  highlightjs: true
+  hljs_languages:
+    - lua
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/ClockworkSquirrel/
+    - icon: https://static.wikia.nocookie.net/logopedia/images/1/19/Roblox_2017_O_Icon_final_-_Red.svg
+      link: https://roblox.com/users/3659905
 
 pages:
   - Home: index.md
