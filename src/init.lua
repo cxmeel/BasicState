@@ -359,6 +359,50 @@ function State:Roact(Component, Keys)
 end
 
 --[[
+	Returns a string format of the current state instead of the class.
+
+	Added by @Kevinwkz in v0.2.1
+]]
+function State:__tostring()
+	local str = "\n"
+	local spaces = 2
+	
+	local function parseString(s)
+		return type(s) == "string" and "\"" .. s .. "\"" or s
+	end
+	
+	local function stringify(tbl, stack)
+		stack = stack or 1
+		local s = ""
+		local space = ((" "):rep(spaces)):rep(stack)
+
+		local length = 0
+		for _, _ in next , tbl do
+			length += 1
+		end
+
+		local i = 1
+		for k, v in next, tbl do
+			local key = ("%s[%s]:"):format(space, parseString(k))
+			local comma = i < length and "," or ""
+			if type(v) ~= "table" then
+				s ..= ("%s %s%s\n"):format(key, parseString(v), comma)
+			else
+				s ..= ("%s {\n%s%s}%s\n"):format(key, stringify(v, stack + 1), space, comma)
+			end
+			i += 1
+		end
+		if stack == 1 then
+			str ..= s
+		end
+		return s
+	end
+	stringify(self.__state)
+
+	return ("\n(State): {%s}"):format(str)
+end
+
+--[[
 	Return the State table from the module to allow users to construct new
 	BasicState instances
 --]]
