@@ -2,7 +2,7 @@
 Help make BasicState better! Here's a few tips to help make contributing to this project easy:
 
 # Reporting Bugs
-If you encounter bugs while using BasicState, be sure to submit an issue via the [GitHub Issues page](https://github.com/ClockworkSquirrel/BasicState/issues).
+If you encounter bugs while using BasicState, be sure to submit an issue via the [GitHub Issues page](https://github.com/csqrl/BasicState/issues).
 
 ## Writing Bug Reports
 To help resolve the issue as quickly as possible, don't forget to include a few details about what went wrong! This could include:

@@ -1,12 +1,12 @@
 --[[
-	BasicState by csqrl (ClockworkSquirrel)
+	BasicState by csqrl (csqrl)
 	Version: 0.2.0
 
 	Other Contributors:
-	https://github.com/ClockworkSquirrel/BasicState/graphs/contributors
+	https://github.com/csqrl/BasicState/graphs/contributors
 
 	Documentation is at:
-	https://clockworksquirrel.github.io/BasicState/
+	https://csqrl.github.io/BasicState/
 
 	Overview of Methods:
 		BasicState.new([ InitialState: Dictionary<any, any> = {} ]): State
@@ -366,11 +366,11 @@ end
 function State:__tostring()
 	local str = "\n"
 	local spaces = 2
-	
+
 	local function parseString(s)
 		return type(s) == "string" and "\"" .. s .. "\"" or s
 	end
-	
+
 	local function stringify(tbl, stack)
 		stack = stack or 1
 		local s = ""

@@ -17,7 +17,7 @@ The easiest method to add BasicState to your project is via the Toolbox.
 * Insert it into your game via the [Toolbox](https://developer.roblox.com/en-us/resources/studio/Toolbox) in Roblox Studio.
 
 ### Method 2: Model File
-* Download the latest `rbxm` or `rbxmx` file from the [Releases page](https://github.com/ClockworkSquirrel/BasicState/releases/latest).
+* Download the latest `rbxm` or `rbxmx` file from the [Releases page](https://github.com/csqrl/BasicState/releases/latest).
 * Insert it into your game via Roblox Studio.
 
 ### Method 3: Rojo
