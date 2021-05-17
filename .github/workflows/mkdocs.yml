@@ -4,7 +4,7 @@ on: [push]
 jobs:
   deploy-docs:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, "[docs]")
+    if: contains(github.event.head_commit.message, '[docs]')
     timeout-minutes: 8
 
     steps:
