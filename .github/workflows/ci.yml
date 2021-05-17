@@ -23,10 +23,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build test project
-        run: rojo build test.project.json -o scripts/testplace.rbxlx
+        run: rojo build ./test.project.json -o ./scripts/testplace.rbxlx
 
       - name: run unit tests
-        run: run-in-roblox --place scripts/testplace.rbxlx --script scripts/run-tests.server.lua
+        run: run-in-roblox --place ./scripts/testplace.rbxlx --script ./scripts/run-tests.server.lua
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,11 +61,11 @@ jobs:
 
       - name: build project
         run: |
-          rojo build default.project.json -o dist/${{ env.PROJECT_NAME }}.rbxmx
-          rojo build default.project.json -o dist/${{ env.PROJECT_NAME }}.rbxm
+          rojo build ./default.project.json -o ./dist/${{ env.PROJECT_NAME }}.rbxmx
+          rojo build ./default.project.json -o ./dist/${{ env.PROJECT_NAME }}.rbxm
 
       - name: upload to roblox
-        run: rojo upload default.project.json --asset_id 5023525481 --cookie ${{ secrets.ROBLOSECURITY }}
+        run: rojo upload ./default.project.json --asset_id 5023525481 --cookie ${{ secrets.ROBLOSECURITY }}
 
       - name: upload to github releases
         uses: softprops/action-gh-release@v1
@@ -74,8 +74,8 @@ jobs:
           body: ${{ env.PROJECT_COMMIT_ID }}
           tag_name: ${{ env.PROJECT_VERSION }}
           files: |
-            dist/${{ env.PROJECT_NAME }}.rbxmx
-            dist/${{ env.PROJECT_NAME }}.rbxm
+            ./dist/${{ env.PROJECT_NAME }}.rbxmx
+            ./dist/${{ env.PROJECT_NAME }}.rbxm
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

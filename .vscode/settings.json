@@ -1,5 +1,5 @@
 {
-    "rojo.releaseBranch": "7.x",
+    "rojo.releaseBranch": "6.x",
 
     "todo-tree.filtering.ignoreGitSubmodules": true,
     "todo-tree.highlights.useColourScheme": true,
