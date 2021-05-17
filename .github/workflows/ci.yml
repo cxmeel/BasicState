@@ -31,7 +31,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '[release]')
-    needs: [unit-test]
+    needs: [unit-tests]
     timeout-minutes: 10
 
     steps:
