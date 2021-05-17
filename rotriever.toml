@@ -1,10 +1,10 @@
 [package]
-name = "basicstate"
+name = "BasicState"
 author = "csqrl"
 license = "MIT"
-version = "0.2.1"
-dependencies_root = "./packages"
-content_root = "./src"
+version = "0.2.2"
+dependencies_root = "packages"
+content_root = "src"
 
 [dependencies]
 Roact = "https://github.com/roblox/roact.git"
