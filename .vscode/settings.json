@@ -1,6 +1,14 @@
 {
-    "Lua.diagnostics.globals": [
-        "Instance",
-        "warn"
-    ]
+    "rojo.releaseBranch": "7.x",
+
+    "todo-tree.filtering.ignoreGitSubmodules": true,
+    "todo-tree.highlights.useColourScheme": true,
+    "todo-tree.regex.regex": "((--|//|#|<!--|;|/\\*|^)\\s*($TAGS)|^\\s*- \\[ \\])",
+    "todo-tree.filtering.excludeGlobs": [
+        "**/packages"
+    ],
+
+    "git.ignoreSubmodules": true,
+    "git.autoRepositoryDetection": "openEditors",
+    "git.detectSubmodules": false
 }

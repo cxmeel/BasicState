@@ -1,0 +1,30 @@
+{
+    "name": "basicstate-unit-tests",
+    "tree": {
+        "$className": "DataModel",
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "Packages": {
+                "$path": "packages"
+            },
+            "BasicState": {
+                "$path": "src"
+            }
+        },
+        "TestService": {
+            "$className": "TestService",
+            "$properties": {
+                "ExecuteWithStudioRun": true
+            },
+            "RunTests": {
+                "$path": "scripts/run-tests.server.lua"
+            }
+        },
+        "Players": {
+            "$className": "Players",
+            "$properties": {
+                "CharacterAutoLoads": false
+            }
+        }
+    }
+}

@@ -1,17 +1,31 @@
-[![# BasicState](basicstate-cover.png)](https://csqrl.github.io/BasicState/)
+<!-- Link References -->
+[repo]: https://github.com/csqrl/BasicState
+[contribs]: https://github.com/csqrl/BasicState/graphs/contributors
+
+[docs]: https://csqrl.github.io/BasicState
+[docs-example]: https://csqrl.github.io/BasicState/example
+
+[forum]: https://devforum.roblox.com/t/571355
+[forum-dm]: https://devforum.roblox.com/new-message?username=csqrl
+
+<!-- Image References -->
+[img-cover]: resources/basicstate-cover.png
+
+<!-- Content -->
+[![# BasicState][img-cover]][docs]
 BasicState is a really, really simple key-value based state management solution. It makes use of [BindableEvents](https://developer.roblox.com/en-us/api-reference/class/BindableEvent) to allow your projects to watch for changes in state, and provides a simple API for communication with your state objects. Think [Rodux](https://roblox.github.io/rodux/), but much more simple.
 
 ## Getting Started
-[Visit the documentation site](https://csqrl.github.io/BasicState/) to get started with BasicState, see examples, and view the full documentation.
+[Visit the documentation site][docs] to get started with BasicState, see examples, and view the full documentation.
 
 ## Contributors
-A huge thanks to [the contributors](https://github.com/csqrl/BasicState/graphs/contributors) of this project. You've added some awesome new features and helps work out a few kinks.
+A huge thanks to [the contributors][contribs] of this project. You've added some awesome new features and helps work out a few kinks.
 
 ## Documentation
-Documentation is available on the [documentation site](https://csqrl.github.io/BasicState/docs/).
+Documentation is available on the [documentation site][docs].
 
 ## Examples
-For examples, please see the [documentation site](https://csqrl.github.io/BasicState/example/).
+For examples, please see the [documentation site][docs-example].
 
 **Basic example:**
 ```lua
@@ -76,5 +90,5 @@ return Store:Roact(MyComponent, { "Hello" })
 ```
 
 ## Get in Touch
-Please refer to the [thread on the Roblox Developer Forums](https://devforum.roblox.com/t/basicstate-a-state-management-solution/571355) if you wish to discuss BasicState.
-You can also contact me via direct message [on the DevForums](https://devforum.roblox.com/u/csqrl).
+Please refer to the [thread on the Roblox Developer Forums][forum] if you wish to discuss BasicState.
+You can also contact me via direct message [on the DevForums][forum-dm].

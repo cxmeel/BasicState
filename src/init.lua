@@ -1,6 +1,9 @@
 --[[
-	BasicState by csqrl (csqrl)
-	Version: 0.2.0
+	BasicState
+	Version: 0.2.1
+
+	Author: csqrl
+	Contributors: boatbomber
 
 	Other Contributors:
 	https://github.com/csqrl/BasicState/graphs/contributors
@@ -291,8 +294,7 @@ function State:Destroy()
 	end
 
 	self.__changeEvent:Destroy()
-	self.__state = nil
-	self = nil
+	self.__state = {}
 end
 
 --[[
@@ -360,15 +362,14 @@ end
 
 --[[
 	Returns a string format of the current state instead of the class.
-
-	Added by @Kevinwkz in v0.2.1
+	Added by @Kevinwkz in v0.2.2
 ]]
 function State:__tostring()
 	local str = "\n"
 	local spaces = 2
 
 	local function parseString(s)
-		return type(s) == "string" and "\"" .. s .. "\"" or s
+		return type(s) == "string" and "\"" .. s .. "\"" or tostring(s)
 	end
 
 	local function stringify(tbl, stack)

@@ -7,14 +7,13 @@ repo_name: csqrl/BasicState
 repo_url: https://github.com/csqrl/BasicState
 edit_uri: edit/default/docs
 
-copyright: ©2021 - csqrl
+copyright: 2021 - csqrl
 use_directory_urls: true
-
 
 theme:
   name: material
-  logo: https://raw.githubusercontent.com/csqrl/BasicState/default/bs-favicon.svg
-  favicon: https://raw.githubusercontent.com/csqrl/BasicState/default/bs-favicon.png
+  logo: https://raw.githubusercontent.com/csqrl/BasicState/default/resources/bs-favicon.svg
+  favicon: https://raw.githubusercontent.com/csqrl/BasicState/default/resources/bs-favicon.png
   features:
     - instant
   language: en

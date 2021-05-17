@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "Run with TestEZ",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/scripts/test.ps1",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
