@@ -42,7 +42,7 @@ jobs:
       - name: setup toolchain
         uses: Roblox/setup-foreman@v1
         with:
-          token: ${{ secret.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: get project name
         run: |
