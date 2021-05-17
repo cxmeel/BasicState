@@ -7,26 +7,27 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         with:
           submodules: recursive
 
-      - name: install studio
+      - name: Install Studio
         uses: OrbitalOwen/roblox-win-installer-action@1.1
         with:
           cookie: ${{ secrets.ROBLOSECURITY }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: setup toolchain
+      - name: Setup Toolchain
         uses: Roblox/setup-foreman@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build test project
-        run: rojo build ./test.project.json -o ./scripts/testplace.rbxlx
+      - name: Build Test Project
+        run: rojo build test.project.json -o scripts/testplace.rbxlx
 
-      - name: run unit tests
-        run: run-in-roblox --place ./scripts/testplace.rbxlx --script ./scripts/run-tests.server.lua
+      - name: Run Unit Tests
+        run: run-in-roblox --place scripts/testplace.rbxlx --script scripts/run-tests.server.lua
 
   deploy:
     runs-on: ubuntu-latest
@@ -35,47 +36,48 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         with:
           submodules: recursive
 
-      - name: setup toolchain
+      - name: Setup Toolchain
         uses: Roblox/setup-foreman@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: get project name
+      - name: Get Project Name
         run: |
           PROJECT_NAME=`grep -Po '(?<=^name = ")([^"]+)' rotriever.toml`
           echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
 
-      - name: get current version
+      - name: Get Current Version
         run: |
           PROJECT_VERSION=`grep -Po '(?<=^version = ")([^"]+)' rotriever.toml`
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
 
-      - name: get commit id
+      - name: Get Commit ID
         run: |
           PROJECT_COMMIT_ID=`git rev-parse --short ${{ github.sha }}`
           echo "PROJECT_COMMIT_ID=$PROJECT_COMMIT_ID" >> $GITHUB_ENV
 
-      - name: build project
+      - name: Build Project
         run: |
-          rojo build ./default.project.json -o ./dist/${{ env.PROJECT_NAME }}.rbxmx
-          rojo build ./default.project.json -o ./dist/${{ env.PROJECT_NAME }}.rbxm
+          rojo build default.project.json -o dist/${{ env.PROJECT_NAME }}.rbxmx
+          rojo build default.project.json -o dist/${{ env.PROJECT_NAME }}.rbxm
 
-      - name: upload to roblox
-        run: rojo upload ./default.project.json --asset_id 5023525481 --cookie ${{ secrets.ROBLOSECURITY }}
+      - name: Upload to Roblox
+        run: rojo upload default.project.json --asset_id 5023525481 --cookie ${{ secrets.ROBLOSECURITY }}
 
-      - name: upload to github releases
+      - name: Upload to Github Releases
         uses: softprops/action-gh-release@v1
         with:
           name: ${{ env.PROJECT_VERSION }}
           body: ${{ env.PROJECT_COMMIT_ID }}
           tag_name: ${{ env.PROJECT_VERSION }}
           files: |
-            ./dist/${{ env.PROJECT_NAME }}.rbxmx
-            ./dist/${{ env.PROJECT_NAME }}.rbxm
+            dist/${{ env.PROJECT_NAME }}.rbxmx
+            dist/${{ env.PROJECT_NAME }}.rbxm
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
