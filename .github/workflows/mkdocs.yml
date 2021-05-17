@@ -1,19 +1,19 @@
-name: Deploy Mkdocs
-
-on:
-  push:
-    branches:
-      - default
+name: Deploy Docs
+on: [push]
 
 jobs:
-  build:
-    name: Deploy docs
+  deploy-docs:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout master
-        uses: actions/checkout@v2
+    if: contains(github.event.head_commit.message, "[docs]")
+    timeout-minutes: 8
 
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@1.11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Deploy to GitHub Pages
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
-          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: mkdocs.yml
