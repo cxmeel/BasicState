@@ -20,18 +20,15 @@ theme:
   font:
     code: "Fira Code"
   icon:
-    logo: material/school
-    repo: fontawesome/brands/github-alt
+    repo: fontawesome/brands/github
   highlightjs: true
   hljs_languages:
     - lua
 
 extra:
   social:
-    - icon: fontawesome/brands/github-alt
+    - icon: fontawesome/brands/github
       link: https://github.com/csqrl/
-    - icon: https://static.wikia.nocookie.net/logopedia/images/1/19/Roblox_2017_O_Icon_final_-_Red.svg
-      link: https://roblox.com/users/3659905
 
 nav:
   - Home: index.md
