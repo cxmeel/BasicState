@@ -13,7 +13,7 @@ jobs:
           submodules: recursive
 
       - name: Install Studio
-        uses: osyrisrblx/roblox-win-installer-action@1.1
+        uses: osyrisrblx/roblox-win-installer-action@master
         with:
           cookie: ${{ secrets.ROBLOSECURITY }}
           token: ${{ secrets.GITHUB_TOKEN }}
