@@ -22,6 +22,12 @@ jobs:
         uses: Roblox/setup-foreman@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Install Kayak
+        run: npm i -g kayak
+        
+      - name: Fetch Packages
+        run: kayak pull
 
       - name: Build Test Project
         run: rojo build test.project.json -o scripts/testplace.rbxlx
