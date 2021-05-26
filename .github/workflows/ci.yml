@@ -45,6 +45,9 @@ jobs:
         uses: Roblox/setup-foreman@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Install Kayak
+        run: npm i -g kayak
 
       - name: Get Project Name
         run: |
@@ -60,6 +63,9 @@ jobs:
         run: |
           PROJECT_COMMIT_ID=`git rev-parse --short ${{ github.sha }}`
           echo "PROJECT_COMMIT_ID=$PROJECT_COMMIT_ID" >> $GITHUB_ENV
+          
+      - name: Fetch Packages
+        run: kayak pull
 
       - name: Build Project
         run: |
