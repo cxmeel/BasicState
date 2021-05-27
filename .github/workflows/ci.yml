@@ -28,6 +28,9 @@ jobs:
         
       - name: Fetch Packages
         run: kayak pull
+        
+      - name: Clean Up After Kayak
+        run: Get-ChildItem packages $Path | Where{$_.Name -Match "^.__\w+"} | Remove-Item -Force -Recurse
 
       - name: Build Test Project
         run: rojo build test.project.json -o scripts/testplace.rbxlx
@@ -72,6 +75,9 @@ jobs:
           
       - name: Fetch Packages
         run: kayak pull
+        
+      - name: Clean Up After Kayak
+        run: Get-ChildItem packages $Path | Where{$_.Name -Match "^.__\w+"} | Remove-Item -Force -Recurse
 
       - name: Build Project
         run: |
