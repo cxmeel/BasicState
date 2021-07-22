@@ -25,6 +25,7 @@
 		State:RawSet(Key: any, Value: any): void
 		State:GetChangedSignal(Key: any): RBXScriptSignal
 		State:Roact(Component: Roact.Component[, Keys: any[] = nil]): Roact.Component
+		State:Reset(): void
 		State:Destroy(): void
 
 		State.Changed: RBXScriptSignal
@@ -56,6 +57,13 @@ function State.new(InitialState)
 		or an empty table otherwise
 	--]]
 	self.__state = type(InitialState) == "table" and InitialState or {}
+
+
+	--[[
+		Store a copy of the initial state which can be retrieved later using State:Reset()
+		Added by @Gaffal in v0.2.3
+	]]
+	self.__initialState = self:__joinDictionary(self.__state)
 
 	--[[
 		Create a new BindableEvent, which is triggered when state changes
@@ -282,6 +290,24 @@ function State:GetChangedSignal(Key)
 	self.__bindables[Key] = Signal
 
 	return Signal.Event
+end
+
+--[[
+	Set the current state to the initial state passed when creating the state object
+	Added by @Gaffal in v0.2.3
+]]
+function State:Reset()
+	-- Set the keys which are in __initialState
+	for key, value in next, self.__initialState do
+		self:Set(key, value)
+	end
+
+	-- Remove the keys which are not in __initialState
+	for key in next, self:GetState() do
+		if self.__initialState[key] == nil then
+			self:Delete(key)
+		end
+	end
 end
 
 --[[
