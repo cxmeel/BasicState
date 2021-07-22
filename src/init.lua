@@ -18,7 +18,7 @@
 		State:Set(Key: any, Value: any): void
 		State:Delete(Key: any): void
 		State:GetState(): Dictionary<any, any>
-		State:SetState(StateTable: Dictionary<any, any>): void
+		State:SetState(StateTable: Dictionary<any, any> | Callback: function(CurrentState: Dictionary<any, any>): UpdatedState): void
 		State:Toggle(Key: any): void
 		State:Increment(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
 		State:Decrement(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
@@ -192,12 +192,26 @@ end
 	Like React's setState method, SetState accepts a table of key-value pairs,
 	which will be added to or mutated in the store. This is a deep copy, so
 	original data will not be overwritten unless specified.
---]]
-function State:SetState(StateTable)
-	assert(type(StateTable) == "table")
 
-	for Key, Value in next, StateTable do
-		self:Set(Key, Value)
+	- Added by @Gaffal in v0.2.3
+	SetState also accepts a function which receives a copy of the current
+	state and returns the new state.
+--]]
+function State:SetState(State)
+	local StateType = type(State)
+	assert(StateType == "table" or StateType == "function")
+
+	if StateType == 'table' then
+		for Key, Value in next, State do
+			self:Set(Key, Value)
+		end
+
+	elseif StateType == "function" then
+		local UpdatedState = State(self:GetState())
+
+		if type(UpdatedState) == 'table' then
+			self:SetState(UpdatedState)
+		end
 	end
 end
 
