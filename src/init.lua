@@ -1,6 +1,6 @@
 --[[
 	BasicState
-	Version: 0.2.2
+	Version: 0.2.3
 
 	Author: csqrl
 	Contributors: boatbomber
@@ -18,7 +18,7 @@
 		State:Set(Key: any, Value: any): void
 		State:Delete(Key: any): void
 		State:GetState(): Dictionary<any, any>
-		State:SetState(StateTable: Dictionary<any, any> | Callback: function(CurrentState: Dictionary<any, any>): UpdatedState): void
+		State:SetState(StateTable: Dictionary<any, any> | Callback: function(CurrentState: Dictionary<any, any>): UpdatedState: Dictionary<any, any>): void
 		State:Toggle(Key: any): void
 		State:Increment(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
 		State:Decrement(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void
