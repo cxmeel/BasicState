@@ -319,7 +319,7 @@ function State:Reset()
 	-- Remove the keys which are not in __initialState
 	for key in next, self:GetState() do
 		if self.__initialState[key] == nil then
-			self:Delete(key)
+			self:Set(key, nil)
 		end
 	end
 end
