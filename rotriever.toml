@@ -5,7 +5,3 @@ license = "MIT"
 version = "0.2.3"
 dependencies_root = "packages"
 content_root = "src"
-
-[dependencies]
-Roact = "https://github.com/roblox/roact.git"
-TestEZ = "https://github.com/roblox/testez.git"
