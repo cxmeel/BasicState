@@ -26,7 +26,8 @@ BasicState is a really, really simple key-value based state management solution.
 It's easy to get started using BasicState. There are a few methods to add BasicState to your project:
 
 !!! info
-It's recommended that you place the BasicState module in a place like [ReplicatedStorage][devhub/replicatedstorage], as it can be used on both the client and server; however, this is not mandatory.
+
+    It's recommended that you place the BasicState module in a place like [ReplicatedStorage][devhub/replicatedstorage], as it can be used on both the client and server; however, this is not mandatory.
 
 ### Method 1: [Wally][wally]
 

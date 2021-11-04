@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.event.workflow_run.conclusion == 'success' &&
-      contains(github.event.head_commit.message, '[release]')
+      contains(github.event.workflow_run.head_commit.message, '[release]')
     timeout-minutes: 5
     steps:
       - name: Checkout Repository

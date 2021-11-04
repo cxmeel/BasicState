@@ -229,7 +229,8 @@ Clears the current state and disconnects all connections.
 Wraps a Roact component and injects BasicState into the component's state.
 
 !!! tip "Experimental"
-This feature is experimental! You may encounter bugs when using it; if so, please [submit an issue](https://github.com/csqrl/BasicState/issues/new).
+
+    This feature is experimental! You may encounter bugs when using it; if so, please [submit an issue](https://github.com/csqrl/BasicState/issues/new).
 
 ### Syntax
 
@@ -246,7 +247,8 @@ There's a full example within the `/examples` directory on how to use BasicState
 An [RBXScriptSignal](https://developer.roblox.com/en-us/api-reference/datatype/RBXScriptSignal) which is fired any time the state mutates. The Event fires with the following values (in order):
 
 !!! warning
-Using `:GetChangedSignal()` is the preferred method for listening to state changes.
+
+    Using `:GetChangedSignal()` is the preferred method for listening to state changes.
 
 | Name       | Type                   | Description                                |
 | ---------- | ---------------------- | ------------------------------------------ |
