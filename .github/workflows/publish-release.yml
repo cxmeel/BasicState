@@ -1,0 +1,55 @@
+name: Upload GitHub Release
+on:
+  workflow_run:
+    workflows: ["Unit Tests"]
+    branches: [default]
+    types: [completed]
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.workflow_run.conclusion == 'success' &&
+      contains(github.event.head_commit.message, '[release]')
+    timeout-minutes: 5
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          submodules: true
+
+      - name: Setup Toolchain
+        uses: Roblox/setup-foreman@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report Tool Versions
+        shell: bash
+        run: foreman list
+
+      - name: Get Release Details
+        shell: bash
+        run: |
+          echo "PROJECT_VERSION=`grep -Po '(?<=version = ")([^"]+)' wally.toml`" >> $GITHUB_ENV
+          echo "PROJECT_COMMIT_ID=`git rev-parse --short ${{ github.sha }}`" >> $GITHUB_ENV
+
+      - name: Build Project
+        shell: bash
+        run: |
+          rojo build default.project.json -o release.rbxmx
+          rojo build default.project.json -o release.rbxm
+
+      - name: Upload Release to GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ env.PROJECT_VERSION }}
+          body: ${{ env.PROJECT_COMMIT_ID }}
+          tag_name: ${{ env.PROJECT_VERSION }}
+          fail_on_unmatched_files: true
+          files: |
+            release.rbxm
+            release.rbxmx
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

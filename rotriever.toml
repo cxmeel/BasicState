@@ -2,7 +2,7 @@
 name = "BasicState"
 author = "csqrl"
 license = "MIT"
-version = "0.2.2"
+version = "0.2.3"
 dependencies_root = "packages"
 content_root = "src"
 

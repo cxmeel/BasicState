@@ -1,0 +1,61 @@
+name: Publish Stable
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  publish-stable:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup Toolchain
+        uses: roblox/setup-foreman@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report Tool Versions
+        shell: bash
+        run: foreman list
+
+      - name: Upload Release to Roblox (Stable)
+        shell: bash
+        run: |
+          find ./src -name "*.spec.lua" -type f -delete
+          rojo upload default.project.json --asset_id $ASSET_ID --cookie "$ROBLOSECURITY"
+        env:
+          ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}
+          ASSET_ID: 5023525481
+
+  publish-wally:
+    runs-on: ubuntu-latest
+    needs: ["publish-stable"]
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Toolchain
+        uses: roblox/setup-foreman@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report Tool Versions
+        run: foreman list
+
+      - name: Publish Release to Wally
+        shell: bash
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+        run: |
+          rm -rf packages roblox.toml testez.toml .github .foreman-install node_modules .vscode
+          mkdir -p ~/.wally
+          printf "[tokens]\n\"https://api.wally.run/\" = \"%s\"" "$WALLY_TOKEN" >> ~/.wally/auth.toml
+          wally publish

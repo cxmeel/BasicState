@@ -1,39 +1,94 @@
-<!-- Link References -->
-[repo]: https://github.com/csqrl/BasicState
-[contribs]: https://github.com/csqrl/BasicState/graphs/contributors
-[actions]: https://github.com/csqrl/BasicState/actions
-[latest-release]: https://github.com/csqrl/BasicState/releases/latest
+<!-- Project Link References -->
 
+[ci status]: https://github.com/csqrl/BasicState/actions
+[latest release]: https://github.com/csqrl/BasicState/releases/latest
+[library url]: https://www.roblox.com/library/5023525481
 [docs]: https://csqrl.github.io/BasicState
-[docs-example]: https://csqrl.github.io/BasicState/example
+[npm package]: https://www.npmjs.com/package/@rbxts/basicstate
+[ts bindings repo]: https://github.com/tech0tron/BasicState
 
-[forum]: https://devforum.roblox.com/t/571355
-[forum-dm]: https://devforum.roblox.com/new-message?username=csqrl
+<!-- Articles -->
 
-<!-- Image References -->
-[img-cover]: resources/basicstate-cover.png
-[img-ci-status]: https://github.com/csqrl/BasicState/actions/workflows/ci.yml/badge.svg
-[img-latest-release]: https://img.shields.io/github/v/release/csqrl/BasicState?label=version
+[rojo]: https://rojo.space
+[wally]: https://github.com/upliftgames/wally
+[roblox/rodux]: https://roblox.github.io/rodux/
+[devhub/bindableevents]: https://developer.roblox.com/en-us/api-reference/class/BindableEvent
+[roblox-ts]: https://roblox-ts.com/
+[@tech0tron]: https://github.com/tech0tron
 
-<!-- Content -->
-[![# BasicState][img-cover]][docs]
-[![CI Status][img-ci-status]][actions] [![Latest Release][img-latest-release]][latest-release]
+<!-- Images -->
 
-BasicState is a really, really simple key-value based state management solution. It makes use of [BindableEvents](https://developer.roblox.com/en-us/api-reference/class/BindableEvent) to allow your projects to watch for changes in state, and provides a simple API for communication with your state objects. Think [Rodux](https://roblox.github.io/rodux/), but much more simple.
+[shield ci]: https://github.com/csqrl/BasicState/actions/workflows/unit-tests.yml/badge.svg
+[shield gh release]: https://img.shields.io/github/v/release/csqrl/BasicState?label=latest+release&style=flat
+[shield wally release]: https://img.shields.io/endpoint?url=https://runkit.io/clockworksquirrel/wally-version-shield/branches/master/csqrl/BasicState&color=blue&label=wally&style=flat
+[hero]: .github/assets/basicstate-cover.png
 
-## Getting Started
-[Visit the documentation site][docs] to get started with BasicState, see examples, and view the full documentation.
+[![BasicState][hero]][docs]
 
-## Contributors
-A huge thanks to [the contributors][contribs] of this project. You've added some awesome new features and helps work out a few kinks.
+[![CI][shield ci]][ci status]
+[![GitHub release (latest by date)][shield gh release]][latest release]
+[![Wally release (latest)][shield wally release]][latest release]
 
-## Documentation
-Documentation is available on the [documentation site][docs].
+BasicState is a really simple key-value based state management solution. It makes use of [BindableEvents][devhub/bindableevents] to allow your project to watch for changes in state, and provides a simple but comprehensive API for communication with your state objects. Think [Rodux][roblox/rodux], but easier!
 
-## Examples
-For examples, please see the [documentation site][docs-example].
+## Installation
 
-**Basic example:**
+### [Rojo][rojo]
+
+You can use git submodules to clone this repo into your project's packages directory:
+
+```sh
+$ git submodule add https://github.com/csqrl/BasicState packages/BasicState
+```
+
+Once added, simply sync into Studio using the [Rojo][rojo] plugin.
+
+#### 0.5.x
+
+Download/clone this repo on to your device, and copy the `/src` directory into your packages directory.
+
+### [Wally][wally]
+
+Add `BasicState` to your `wally.toml` and run `wally install`
+
+```toml
+[package]
+name = "user/repo"
+description = "My awesome Roblox project"
+version = "1.0.0"
+license = "MIT"
+authors = ["You (https://github.com/you)"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+BasicState = "csqrl/BasicState@^0.2.3"
+```
+
+```sh
+$ wally install
+```
+
+### [Roblox-TS][roblox-ts] (unofficial)
+
+While this package doesn't officially support TypeScript, bindings are available under the [`@rbxts/basicstate`][npm package] package, which can be installed using npm or yarn.
+
+```sh
+$ npm i @rbxts/basicstate
+$ yarn add @rbxts/basicstate
+$ pnpm add @rbxts/basicstate
+```
+
+TypeScript bindings are provided by [@tech0tron][@tech0tron]. Please file any issues for the npm package over on [their repo][ts bindings repo].
+
+### Manual Installation
+
+Grab a copy [from the Roblox Library (Toolbox)][library url], or download the latest `.rbxm/.rbxmx` file from [the releases page][latest release] and drop it into Studio.
+
+## Usage
+
+Here's a quick example of how BasicState can be used:
+
 ```lua
 local BasicState = require(path.to.BasicState)
 
@@ -55,11 +110,10 @@ State:SetState({
 --]]
 ```
 
-**Usage with Roact**
-
-`MyProject.Store.lua`:
+Usage with Roact:
 
 ```lua
+-- Store.lua
 local BasicState = require(path.to.BasicState)
 
 local Store = BasicState.new({
@@ -69,8 +123,8 @@ local Store = BasicState.new({
 return Store
 ```
 
-`MyProject.Components.MyComponent.lua`:
 ```lua
+-- MyComponent.lua
 local Roact = require(path.to.Roact)
 local MyComponent = Roact.Component:extend("MyComponent")
 
@@ -88,13 +142,10 @@ function MyComponent:render()
     })
 end
 
---[[
-    Wrap the component with the BasicState store and inject
-    the value of Hello into the component state.
---]]
-return Store:Roact(MyComponent, { "Hello" })
+-- Wrap the component with the BasicState store
+return Store:Roact(MyComponent)
 ```
 
-## Get in Touch
-Please refer to the [thread on the Roblox Developer Forums][forum] if you wish to discuss BasicState.
-You can also contact me via direct message [on the DevForums][forum-dm].
+# Documentation
+
+Please [refer to the documentation site][docs] for a full overview of the exported API and further examples on how to use this module.

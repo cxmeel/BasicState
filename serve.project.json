@@ -1,0 +1,14 @@
+{
+  "name": "basicstate-serve",
+  "tree": {
+    "$className": "DataModel",
+    "$ignoreUnknownInstances": true,
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "$ignoreUnknownInstances": true,
+      "BasicState": {
+        "$path": "default.project.json"
+      }
+    }
+  }
+}

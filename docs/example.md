@@ -1,5 +1,6 @@
 ## Tab Highlighting
-This is a direct extract from the avatar editor UI controller in Bloxikins World. BasicState is being used to control which tab is currently in focus and which asset category to display to players.
+
+This is a direct extract from the avatar editor UI controller in ~~Bloxikins World~~. BasicState is being used to control which tab is currently in focus and which asset category to display to players.
 
 ```lua
 -- Reference the tab buttons UI container

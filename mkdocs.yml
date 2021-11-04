@@ -10,8 +10,8 @@ use_directory_urls: true
 
 theme:
   name: material
-  logo: https://raw.githubusercontent.com/csqrl/BasicState/default/resources/bs-favicon.svg
-  favicon: https://raw.githubusercontent.com/csqrl/BasicState/default/resources/bs-favicon.png
+  logo: https://raw.githubusercontent.com/csqrl/BasicState/default/.github/assets/bs-favicon.svg
+  favicon: https://raw.githubusercontent.com/csqrl/BasicState/default/.github/assets/bs-favicon.png
   language: en
   palette:
     primary: green

@@ -1,14 +1,11 @@
 {
-  "name": "basicstate-unit-tests",
+  "name": "basicstate-tests",
   "tree": {
     "$className": "DataModel",
-    "ReplicatedStorage": {
-      "$className": "ReplicatedStorage",
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
       "BasicState": {
-        "$path": "src"
-      },
-      "Roact": {
-        "$path": "modules/roact"
+        "$path": "default.project.json"
       }
     },
     "TestService": {
@@ -16,11 +13,11 @@
       "$properties": {
         "ExecuteWithStudioRun": true
       },
-      "TestEZ": {
-        "$path": "modules/testez"
+      "Packages": {
+        "$path": "modules"
       },
-      "RunTests": {
-        "$path": "scripts/run-tests.server.lua"
+      "TestRunner": {
+        "$path": "test-runner.server.lua"
       }
     },
     "Players": {

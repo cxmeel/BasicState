@@ -1,8 +1,12 @@
-/dist
-/site
-/packages
-
 *.rbxm*
 *.rbxl*
 
 roblox.toml
+testez.toml
+*.tsbuildinfo
+
+/dist
+/node_modules
+/include
+/out
+/packages

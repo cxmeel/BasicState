@@ -1,11 +1,11 @@
 {
-    "configurations": [
-        {
-            "name": "Run with TestEZ",
-            "type": "PowerShell",
-            "request": "launch",
-            "script": "${workspaceFolder}/scripts/test.ps1",
-            "cwd": "${workspaceFolder}"
-        }
-    ]
+  "configurations": [
+    {
+      "name": "PowerShell: Run Tests",
+      "type": "PowerShell",
+      "request": "launch",
+      "script": ".vscode/scripts/run-tests",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
 }

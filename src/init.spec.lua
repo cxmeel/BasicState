@@ -1,255 +1,292 @@
-local Replicated = game:GetService("ReplicatedStorage")
+local TestService = game:GetService("TestService")
+
+local Roact = require(TestService.Packages.Roact)
+local BasicState = require(script.Parent)
+
+local DEMO_STATE = {
+  Hello = "World",
+  Number = 42,
+  Boolean = true,
+  Colour = Color3.fromHex("#00a2ff"),
+  Table = {
+    Dave = "Roblox",
+  },
+}
+
+local function NewState()
+  return BasicState.new(DEMO_STATE)
+end
 
 return function()
-    local Roact: Roact = require(Replicated.Roact)
-    local BasicState = require(script.Parent)
+  describe("Constructor (.new())", function()
+    it("should create a new BasicState", function()
+      expect(NewState()).to.be.ok()
+    end)
+  end)
 
-    local DEMO_STATE = {
-        Hello = "World",
-        Number = 10,
-        Boolean = true,
-        Colour = Color3.new(),
-    }
-
-    local state = nil
-
-    describe(".new()", function()
-        it("constructs a new state instance", function()
-            state = BasicState.new(DEMO_STATE)
-            expect(state).to.be.ok()
-        end)
+  describe(":Get()", function()
+    it("should return the value of a given key", function()
+      local state = NewState()
+      expect(state:Get("Hello")).to.equal(DEMO_STATE.Hello)
     end)
 
-    describe(":Get()", function()
-        it("gets the value of a stored key", function()
-            expect(state:Get("Hello")).to.equal("World")
-        end)
+    it("returns a default value for a missing key", function()
+      local state = NewState()
+      expect(state:Get("Missing", "Default")).to.equal("Default")
+    end)
+  end)
 
-        it("returns a default value if key is `nil`", function()
-            expect(state:Get("Game", "Experience")).to.equal("Experience")
-        end)
+  describe(":Set()", function()
+    it("should set the value of a given key", function()
+      local state = NewState()
+
+      state:Set("Hello", "Dave")
+
+      expect(state:Get("Hello")).to.equal("Dave")
+    end)
+  end)
+
+  describe(":Delete()", function()
+    it("should delete the value of a given key", function()
+      local state = NewState()
+
+      state:Delete("Hello")
+
+      expect(state:Get("Hello")).to.equal(nil)
+    end)
+  end)
+
+  describe(":GetState()", function()
+    it("should return all values", function()
+      local state = NewState()
+
+      for key, value in pairs(DEMO_STATE) do
+        if key == "Table" then
+          expect(state:GetState()[key]).to.be.a("table")
+          expect(state:GetState()[key].Dave).to.equal(DEMO_STATE.Table.Dave)
+
+          continue
+        end
+
+        expect(state:GetState()[key]).to.equal(value)
+      end
+    end)
+  end)
+
+  describe(":SetState()", function()
+    it("should merge all given values", function()
+      local state = NewState()
+
+      state:SetState({
+        Colour = Color3.fromHex("#ffa200"),
+        Table = {
+          Banana = "Yellow",
+        },
+      })
+
+      expect(state:Get("Hello")).to.equal(DEMO_STATE.Hello)
+      expect(state:Get("Colour")).to.equal(Color3.fromHex("#ffa200"))
+      expect(state:Get("Table").Banana).to.equal("Yellow")
     end)
 
-    describe(":Set()", function()
-        it("sets the value of any given key", function()
-            state:Set("Players", "People")
-            expect(state:Get("Players")).to.equal("People")
-        end)
+    it("accepts a callback for setting state", function()
+      local state = NewState()
+
+      local function setter(isCute: boolean)
+        return function(state)
+          if isCute then
+            state.Cat = "Meow"
+          end
+
+          return state
+        end
+      end
+
+      state:SetState(setter(false))
+      expect(state:Get("Cat")).to.equal(nil)
+
+      state:SetState(setter(true))
+      expect(state:Get("Cat")).to.equal("Meow")
+    end)
+  end)
+
+  describe(":Toggle()", function()
+    it("should toggle the value of a given key", function()
+      local state = NewState()
+
+      state:Toggle("Boolean")
+
+      expect(state:Get("Boolean")).to.equal(false)
+    end)
+  end)
+
+  describe(":Increment()", function()
+    it("should increment the value of a given key", function()
+      local state = NewState()
+
+      state:Increment("Number")
+
+      expect(state:Get("Number")).to.equal(43)
     end)
 
-    describe(":Delete()", function()
-        it("removes a key from the state", function()
-            state:Delete("Players")
-            expect(state:Get("Players")).to.equal(nil)
-        end)
+    it("should increment the value of a given key by a given amount", function()
+      local state = NewState()
+
+      state:Increment("Number", 2)
+
+      expect(state:Get("Number")).to.equal(44)
+    end)
+  end)
+
+  describe(":Decrement()", function()
+    it("should decrement the value of a given key", function()
+      local state = NewState()
+
+      state:Decrement("Number")
+
+      expect(state:Get("Number")).to.equal(41)
     end)
 
-    describe(":GetState()", function()
-        it("returns the current state table", function()
-            local getState = state:GetState()
+    it("should decrement the value of a given key by a given amount", function()
+      local state = NewState()
 
-            expect(getState.Hello).to.equal(DEMO_STATE.Hello)
-            expect(getState.Number).to.equal(DEMO_STATE.Number)
-            expect(getState.Boolean).to.equal(DEMO_STATE.Boolean)
-            expect(getState.Colour).to.equal(DEMO_STATE.Colour)
-        end)
+      state:Decrement("Number", 2)
+
+      expect(state:Get("Number")).to.equal(40)
+    end)
+  end)
+
+  describe(":RawSet()", function()
+    it("sets the value of a given key without firing events", function()
+      local state = NewState()
+
+      local changedFired = false
+      local changedSignal = state.Changed:Connect(function()
+        changedFired = true
+      end)
+
+      state:RawSet("Hello", "Dave")
+
+      expect(state:Get("Hello")).to.equal("Dave")
+      expect(changedFired).to.equal(false)
+
+      changedSignal:Disconnect()
+    end)
+  end)
+
+  describe(":GetChangedSignal()", function()
+    it("returns a signal for any key", function()
+      local state = NewState()
+
+      local signal = state:GetChangedSignal("Shrek")
+      local fired = false
+
+      local connection = signal:Connect(function()
+        fired = true
+      end)
+
+      state:Set("Shrek", "Fiona")
+      connection:Disconnect()
+
+      expect(fired).to.equal(true)
+    end)
+  end)
+
+  describe(":Roact()", function()
+    it("wraps a Roact component with the state", function()
+      local state = NewState()
+
+      local component = Roact.Component:extend("Component")
+
+      function component:render()
+        return nil
+      end
+
+      function component:didMount()
+        expect(self.state.Hello).to.equal(DEMO_STATE.Hello)
+      end
+
+      local element = Roact.createElement(state:Roact(component))
+      local instance = Roact.mount(element, nil)
+
+      state:Set("Hello", "Dave")
+
+      afterAll(function()
+        Roact.unmount(instance)
+      end)
     end)
 
-    describe(":SetState()", function()
-        it("updates mutliple keys at once", function()
-            state:SetState({
-                Hello = "Metaverse",
-                Banana = false,
-            })
+    it("updates Roact components when state changes", function()
+      local state = NewState()
 
-            expect(state:Get("Hello")).to.equal("Metaverse")
-            expect(state:Get("Banana")).to.equal(false)
-        end)
+      local component = Roact.Component:extend("Component")
 
-        it("accepts a callback for setting state", function()
-            local state = BasicState.new(DEMO_STATE)
+      function component:render()
+        return nil
+      end
 
-            state:SetState(function(state)
-                if state.Hello == "World" then
-                    state.Hello = "Metaverse"
-                end
+      function component:didUpdate()
+        expect(self.state.Hello).to.equal("Dave")
+      end
 
-                state.Banana = false
+      local element = Roact.createElement(state:Roact(component))
+      local instance = Roact.mount(element, nil)
 
-                return state
-            end)
+      state:Set("Hello", "Dave")
 
-            expect(state:Get("Hello")).to.equal("Metaverse")
-            expect(state:Get("Banana")).to.equal(false)
-        end)
+      afterAll(function()
+        Roact.unmount(instance)
+      end)
     end)
+  end)
 
-    describe(":Toggle()", function()
-        it("toggles the value of a stored boolean", function()
-            state:Toggle("Boolean")
+  describe(".Changed", function()
+    it("fires when state changes", function()
+      local state = NewState()
 
-            expect(state:Get("Boolean")).to.equal(false)
-        end)
+      local signal = state.Changed:Connect(function()
+        expect(state:Get("Hello")).to.equal("Dave")
+      end)
+
+      state:Set("Hello", "Dave")
+
+      signal:Disconnect()
     end)
+  end)
 
-    describe(":Increment()", function()
-        it("increments a numeric key by 1", function()
-            state:Increment("Number")
+  describe(".ProtectType", function()
+    it("prevents setting a key to an incorrect type", function()
+      local state = NewState()
 
-            expect(state:Get("Number")).to.equal(11)
-        end)
+      state.ProtectType = true
 
-        it("increments a numeric key by 2", function()
-            state:Increment("Number", 2)
+      expect(function()
+        state:Set("Hello", true)
+      end).to.throw()
 
-            expect(state:Get("Number")).to.equal(13)
-        end)
+      expect(function()
+        state:Set("Hello", "Dave")
+      end).to.be.ok()
     end)
+  end)
 
-    describe(":Decrement()", function()
-        it("decrements a numeric key by 1", function()
-            state:Decrement("Number")
+  describe(":Reset()", function()
+    it("resets the state to the default values", function()
+      local state = NewState()
 
-            expect(state:Get("Number")).to.equal(12)
-        end)
+      state:Set("Hello", "Dave")
+      state:Reset()
 
-        it("decrements a numeric key by 2", function()
-            state:Decrement("Number", 2)
+      for key, value in pairs(DEMO_STATE) do
+        if key == "Table" then
+          expect(state:GetState()[key]).to.be.a("table")
+          expect(state:GetState()[key].Dave).to.equal(DEMO_STATE.Table.Dave)
 
-            expect(state:Get("Number")).to.equal(10)
-        end)
+          continue
+        end
+
+        expect(state:GetState()[key]).to.equal(value)
+      end
     end)
-
-    describe(":RawSet()", function()
-        it("sets the value of a key without firing events", function()
-            local changedFired = false
-            local changedSignal = state.Changed:Connect(function()
-                changedFired = true
-            end)
-
-            state:RawSet("Roblox", "Metaverse")
-
-            expect(state:Get("Roblox")).to.equal("Metaverse")
-            expect(changedFired).to.equal(false)
-
-            changedSignal:Disconnect()
-        end)
-    end)
-
-    describe(":GetChangedSignal()", function()
-        local testKey = "Roblox"
-
-        local signal = nil
-        local connection = nil
-
-        local fired = 0
-
-        it("returns an RBXScriptSignal for any key", function()
-            signal = state:GetChangedSignal(testKey)
-            connection = signal:Connect(function()
-                fired += 1
-            end)
-
-            expect(typeof(signal)).to.equal("RBXScriptSignal")
-            expect(typeof(connection)).to.equal("RBXScriptConnection")
-        end)
-
-        it("fires when the key is updated via :Set()", function()
-            state:Set(testKey, "Experience")
-
-            expect(state:Get(testKey)).to.equal("Experience")
-            expect(fired).to.equal(1)
-        end)
-
-        it("fires when the key is updated via :SetState()", function()
-            state:SetState({
-                [testKey] = "Bobux",
-            })
-
-            expect(state:Get(testKey)).to.equal("Bobux")
-            expect(fired).to.equal(2)
-        end)
-
-        afterAll(function()
-            if connection then
-                connection:Disconnect()
-            end
-        end)
-    end)
-
-    describe(":Roact()", function()
-        it("wraps Roact components with state", function()
-            local responseEvent = Instance.new("BindableEvent")
-            local component = Roact.Component:extend("test-component")
-
-            function component:didMount()
-                expect(self.state.Hello).to.equal("Metaverse")
-            end
-
-            function component:render()
-                return nil
-            end
-
-            local testTree = Roact.mount(
-                Roact.createElement(
-                    state:Roact(component, { "Hello" })
-                ),
-                nil,
-                "test-tree"
-            )
-
-            responseEvent.Event:Connect(function()
-                Roact.unmount(testTree)
-                responseEvent:Destroy()
-            end)
-        end)
-    end)
-
-    describe(".Changed", function()
-        it("responds to state changes", function()
-            state.Changed:Connect(function(_, key)
-                expect(key).to.equal("Roblox")
-            end)
-
-            state:Set("Roblox", "Oof")
-        end)
-    end)
-
-    describe(".ProtectType", function()
-        it("prevents incorrect types from being specified", function()
-            state.ProtectType = true
-
-            expect(pcall(state.Set, state, "Number", true)).to.equal(false)
-            expect(pcall(state.SetState, state, { Number = true })).to.equal(false)
-            expect(pcall(state.Set, state, "Number", 1)).to.equal(true)
-        end)
-    end)
-
-    describe(":Reset()", function()
-        it("resets state back to its initial value(s)", function()
-            local state = BasicState.new(DEMO_STATE)
-
-            state:Set("Hello", "David")
-
-            expect(state:Get("Hello")).to.equal("David")
-
-            state:Reset()
-
-            expect(state:Get("Hello")).to.equal(DEMO_STATE.Hello)
-        end)
-    end)
-
-    describe(":Destroy()", function()
-        it("obiliterates the state instance", function()
-            state:Destroy()
-
-            local count = 0
-
-            for _, _ in pairs(state.__state) do
-                count += 1
-            end
-
-            expect(count).to.equal(0)
-        end)
-    end)
+  end)
 end

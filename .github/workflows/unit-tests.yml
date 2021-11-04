@@ -1,0 +1,41 @@
+name: Unit Tests
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+    branches:
+      - default
+
+jobs:
+  unit-tests:
+    runs-on: windows-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repositry
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install Roblox Studio
+        uses: OrbitalOwen/roblox-win-installer@1.1
+        with:
+          cookie: ${{ secrets.ROBLOSECURITY_CI }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Toolchain
+        uses: roblox/setup-foreman@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report Tool Versions
+        shell: bash
+        run: foreman list
+
+      - name: Build Test Project
+        shell: bash
+        run: rojo build test.project.json -o unit-tests.rbxlx
+
+      - name: Run Unit Tests
+        shell: bash
+        run: run-in-roblox --place unit-tests.rbxlx --script test-runner.server.lua
