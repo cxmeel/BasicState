@@ -1,7 +1,7 @@
 local Replicated = game:GetService("ReplicatedStorage")
 
 return function()
-    local Roact: Roact = require(Replicated.Packages.Roact)
+    local Roact: Roact = require(Replicated.Roact)
     local BasicState = require(script.Parent)
 
     local DEMO_STATE = {
@@ -61,6 +61,23 @@ return function()
                 Hello = "Metaverse",
                 Banana = false,
             })
+
+            expect(state:Get("Hello")).to.equal("Metaverse")
+            expect(state:Get("Banana")).to.equal(false)
+        end)
+
+        it("accepts a callback for setting state", function()
+            local state = BasicState.new(DEMO_STATE)
+
+            state:SetState(function(state)
+                if state.Hello == "World" then
+                    state.Hello = "Metaverse"
+                end
+
+                state.Banana = false
+
+                return state
+            end)
 
             expect(state:Get("Hello")).to.equal("Metaverse")
             expect(state:Get("Banana")).to.equal(false)
@@ -205,6 +222,20 @@ return function()
             expect(pcall(state.Set, state, "Number", true)).to.equal(false)
             expect(pcall(state.SetState, state, { Number = true })).to.equal(false)
             expect(pcall(state.Set, state, "Number", 1)).to.equal(true)
+        end)
+    end)
+
+    describe(":Reset()", function()
+        it("resets state back to its initial value(s)", function()
+            local state = BasicState.new(DEMO_STATE)
+
+            state:Set("Hello", "David")
+
+            expect(state:Get("Hello")).to.equal("David")
+
+            state:Reset()
+
+            expect(state:Get("Hello")).to.equal(DEMO_STATE.Hello)
         end)
     end)
 
