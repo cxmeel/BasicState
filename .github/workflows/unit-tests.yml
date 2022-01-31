@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Checkout Repositry
+      - name: Checkout Repository
         uses: actions/checkout@v2
         with:
           submodules: true
@@ -34,8 +34,8 @@ jobs:
 
       - name: Build Test Project
         shell: bash
-        run: rojo build test.project.json -o unit-tests.rbxlx
+        run: rojo build test.project.json -o unit-tests.rbxl
 
       - name: Run Unit Tests
         shell: bash
-        run: run-in-roblox --place unit-tests.rbxlx --script test-runner.server.lua
+        run: run-in-roblox --place unit-tests.rbxl --script test-runner.server.lua
