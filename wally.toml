@@ -1,7 +1,7 @@
 [package]
 name = "csqrl/basicstate"
 description = "Really simple state management"
-version = "0.2.4"
+version = "0.2.5"
 license = "MIT"
 authors = ["csqrl (https://csqrl.dev)"]
 contributors = ["boatbomber", "rimuy", "gaffal", "mkargus"]
@@ -10,4 +10,3 @@ realm = "shared"
 
 [dev-dependencies]
 TestEZ = "roblox/testez@^0.4.1"
-Roact = "roblox/roact@^1.4.2"

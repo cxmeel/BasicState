@@ -44,7 +44,7 @@ registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
-BasicState = "csqrl/BasicState@^0.2.4"
+BasicState = "csqrl/BasicState@^0.2.5"
 ```
 
 ```sh
