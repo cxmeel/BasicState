@@ -1,0 +1,1427 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A really simple state management solution for Roblox">
+      
+      
+        <link rel="canonical" href="https://csqrl.github.io/BasicState/docs/">
+      
+      
+        <meta name="author" content="csqrl">
+      
+      <link rel="shortcut icon" href="https://raw.githubusercontent.com/csqrl/BasicState/default/.github/assets/bs-favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
+    
+    
+      
+        <title>Documentation - BasicState</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bc7e593a.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab28b872.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=:300,400,400i,700%7CFira+Code&display=fallback">
+        <style>body,input{font-family:"",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Fira Code",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="green" data-md-color-accent="green">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#basicstatenew" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://csqrl.github.io/BasicState/" title="BasicState" class="md-header-nav__button md-logo" aria-label="BasicState">
+      
+  <img src="https://raw.githubusercontent.com/csqrl/BasicState/default/.github/assets/bs-favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            BasicState
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Documentation
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/csqrl/BasicState/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    csqrl/BasicState
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://csqrl.github.io/BasicState/" title="BasicState" class="md-nav__button md-logo" aria-label="BasicState">
+      
+  <img src="https://raw.githubusercontent.com/csqrl/BasicState/default/.github/assets/bs-favicon.svg" alt="logo">
+
+    </a>
+    BasicState
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/csqrl/BasicState/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    csqrl/BasicState
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../example/" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Documentation
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basicstatenew" class="md-nav__link">
+    BasicState.new()
+  </a>
+  
+    <nav class="md-nav" aria-label="BasicState.new()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateset" class="md-nav__link">
+    State:Set()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Set()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_1" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statesetstate" class="md-nav__link">
+    State:SetState()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:SetState()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_2" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statereset" class="md-nav__link">
+    State:Reset()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Reset()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_3" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statedelete" class="md-nav__link">
+    State:Delete()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Delete()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_4" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statetoggle" class="md-nav__link">
+    State:Toggle()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Toggle()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_5" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateincrement" class="md-nav__link">
+    State:Increment()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Increment()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_6" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statedecrement" class="md-nav__link">
+    State:Decrement()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Decrement()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_7" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_3" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#staterawset" class="md-nav__link">
+    State:RawSet()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:RawSet()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_8" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateget" class="md-nav__link">
+    State:Get()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Get()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_9" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stategetstate" class="md-nav__link">
+    State:GetState()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:GetState()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_10" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stategetchangedsignal" class="md-nav__link">
+    State:GetChangedSignal()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:GetChangedSignal()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_11" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_4" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statedestroy" class="md-nav__link">
+    State:Destroy()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Destroy()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_12" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateroact" class="md-nav__link">
+    State:Roact()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Roact()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_13" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_5" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statechanged" class="md-nav__link">
+    State.Changed
+  </a>
+  
+    <nav class="md-nav" aria-label="State.Changed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_14" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_6" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateprotecttype" class="md-nav__link">
+    State.ProtectType
+  </a>
+  
+    <nav class="md-nav" aria-label="State.ProtectType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_15" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_7" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statenone" class="md-nav__link">
+    State.None
+  </a>
+  
+    <nav class="md-nav" aria-label="State.None">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_16" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_8" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basicstatenew" class="md-nav__link">
+    BasicState.new()
+  </a>
+  
+    <nav class="md-nav" aria-label="BasicState.new()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateset" class="md-nav__link">
+    State:Set()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Set()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_1" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statesetstate" class="md-nav__link">
+    State:SetState()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:SetState()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_2" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statereset" class="md-nav__link">
+    State:Reset()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Reset()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_3" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statedelete" class="md-nav__link">
+    State:Delete()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Delete()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_4" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statetoggle" class="md-nav__link">
+    State:Toggle()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Toggle()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_5" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateincrement" class="md-nav__link">
+    State:Increment()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Increment()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_6" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statedecrement" class="md-nav__link">
+    State:Decrement()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Decrement()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_7" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_3" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#staterawset" class="md-nav__link">
+    State:RawSet()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:RawSet()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_8" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateget" class="md-nav__link">
+    State:Get()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Get()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_9" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stategetstate" class="md-nav__link">
+    State:GetState()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:GetState()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_10" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stategetchangedsignal" class="md-nav__link">
+    State:GetChangedSignal()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:GetChangedSignal()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_11" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_4" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statedestroy" class="md-nav__link">
+    State:Destroy()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Destroy()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_12" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateroact" class="md-nav__link">
+    State:Roact()
+  </a>
+  
+    <nav class="md-nav" aria-label="State:Roact()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_13" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_5" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statechanged" class="md-nav__link">
+    State.Changed
+  </a>
+  
+    <nav class="md-nav" aria-label="State.Changed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_14" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_6" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stateprotecttype" class="md-nav__link">
+    State.ProtectType
+  </a>
+  
+    <nav class="md-nav" aria-label="State.ProtectType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_15" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_7" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statenone" class="md-nav__link">
+    State.None
+  </a>
+  
+    <nav class="md-nav" aria-label="State.None">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax_16" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_8" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/csqrl/BasicState/edit/default/docs/docs.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>Documentation</h1>
+                
+                <h2 id="basicstatenew"><code>BasicState.new()</code><a class="headerlink" href="#basicstatenew" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Creates a new state object. Accepts an optional <code>InitialState</code> parameter, for defining the state before it is returned.</p>
+<h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h3>
+<p><code>BasicState.new([ InitialState: Dictionary&lt;any, any&gt; = {} ]): State</code></p>
+<h2 id="stateset"><code>State:Set()</code><a class="headerlink" href="#stateset" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Sets the value of a given key in the state, and then fires off any <code>Changed</code> signals. You should always use this when you need to change the state. Use <code>:RawSet()</code> to change values without invoking change events.</p>
+<h3 id="syntax_1">Syntax<a class="headerlink" href="#syntax_1" title="Permanent link">&para;</a></h3>
+<p><code>State:Set(Key: any, Value: any): void</code></p>
+<h2 id="statesetstate"><code>State:SetState()</code><a class="headerlink" href="#statesetstate" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Set multiple values in the state. <code>Changed</code> signals will be fired for each modified key.</p>
+<h3 id="syntax_2">Syntax<a class="headerlink" href="#syntax_2" title="Permanent link">&para;</a></h3>
+<p><code>State:SetState(StateTable: Dictionary&lt;any, any&gt;): void</code>
+<code>State:SetState(Callback: (State: Dictionary&lt;any, any&gt;) -&gt; Dictionary&lt;any, any&gt;): void</code></p>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">State</span> <span class="o">=</span> <span class="n">BasicState</span><span class="p">.</span><span class="n">new</span><span class="p">({</span>
+    <span class="n">Location</span> <span class="o">=</span> <span class="s2">&quot;Mountain&quot;</span><span class="p">,</span>
+    <span class="n">Greetings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">Place</span> <span class="o">=</span> <span class="s2">&quot;Welcome to the Mountain!&quot;</span><span class="p">,</span>
+        <span class="n">Roblox</span> <span class="o">=</span> <span class="s2">&quot;Hey Roblox!&quot;</span><span class="p">,</span>
+        <span class="n">Me</span> <span class="o">=</span> <span class="s2">&quot;Hi csqrl!&quot;</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="n">State</span><span class="p">:</span><span class="n">SetState</span><span class="p">({</span>
+    <span class="n">Location</span> <span class="o">=</span> <span class="s2">&quot;City&quot;</span><span class="p">,</span>
+    <span class="n">Greetings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">Place</span> <span class="o">=</span> <span class="s2">&quot;Welcome to the City!&quot;</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="cm">--[[</span>
+<span class="cm">    The new state object will look like this:</span>
+
+<span class="cm">    {</span>
+<span class="cm">        Location = &quot;City&quot;,</span>
+<span class="cm">        Greetings = {</span>
+<span class="cm">            Place = &quot;Welcome to the City!&quot;,</span>
+<span class="cm">            Roblox = &quot;Hey Roblox!&quot;,</span>
+<span class="cm">            Me = &quot;Hi csqrl!&quot;</span>
+<span class="cm">        }</span>
+<span class="cm">    }</span>
+<span class="cm">--]]</span>
+</code></pre></div>
+<h2 id="statereset"><code>State:Reset()</code><a class="headerlink" href="#statereset" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Resets state back to its initial keys/values.</p>
+<h3 id="syntax_3">Syntax<a class="headerlink" href="#syntax_3" title="Permanent link">&para;</a></h3>
+<p><code>State:Reset(): void</code></p>
+<h2 id="statedelete"><code>State:Delete()</code><a class="headerlink" href="#statedelete" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Deletes a key from the store by setting its value to <code>State.None</code> (internally converted to <code>nil</code>).</p>
+<h3 id="syntax_4">Syntax<a class="headerlink" href="#syntax_4" title="Permanent link">&para;</a></h3>
+<p><code>State:Delete(Key: any): void</code></p>
+<h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">State</span> <span class="o">=</span> <span class="n">BasicState</span><span class="p">.</span><span class="n">new</span><span class="p">({</span>
+    <span class="n">Hello</span> <span class="o">=</span> <span class="s2">&quot;World&quot;</span>
+<span class="p">})</span>
+
+<span class="n">State</span><span class="p">:</span><span class="n">Delete</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">State</span><span class="p">:</span><span class="n">Get</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">))</span> <span class="c1">--&gt; nil</span>
+</code></pre></div>
+<h2 id="statetoggle"><code>State:Toggle()</code><a class="headerlink" href="#statetoggle" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Toggles a stored Boolean value between <code>true</code> and <code>false</code>. Will throw an error if the stored value is not a Boolean.</p>
+<h3 id="syntax_5">Syntax<a class="headerlink" href="#syntax_5" title="Permanent link">&para;</a></h3>
+<p><code>State:Toggle(Key: any): void</code></p>
+<h3 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">State</span> <span class="o">=</span> <span class="n">BasicState</span><span class="p">.</span><span class="n">new</span><span class="p">({</span>
+    <span class="n">MenuOpen</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">})</span>
+
+<span class="n">State</span><span class="p">:</span><span class="n">Toggle</span><span class="p">(</span><span class="s2">&quot;MenuOpen&quot;</span><span class="p">)</span> <span class="c1">--&gt; true</span>
+<span class="n">State</span><span class="p">:</span><span class="n">Toggle</span><span class="p">(</span><span class="s2">&quot;MenuOpen&quot;</span><span class="p">)</span> <span class="c1">--&gt; false</span>
+</code></pre></div>
+<h2 id="stateincrement"><code>State:Increment()</code><a class="headerlink" href="#stateincrement" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Increases the value of a stored numeric value by 1 (or a specified amount), with an optional cap parameter, which will stop incrementing above a specified number. Will throw an error is the stored value is not a number.</p>
+<h3 id="syntax_6">Syntax<a class="headerlink" href="#syntax_6" title="Permanent link">&para;</a></h3>
+<p><code>State:Increment(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void</code></p>
+<h2 id="statedecrement"><code>State:Decrement()</code><a class="headerlink" href="#statedecrement" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Decreases the value of a stored numeric value by 1 (or a specified amount), with an optional cap parameter, which will stop decrementing below a specified number. Will throw an error if the stored value is not a number.</p>
+<h3 id="syntax_7">Syntax<a class="headerlink" href="#syntax_7" title="Permanent link">&para;</a></h3>
+<p><code>State:Decrement(Key: any[, Amount: Number = 1][, Cap: Number = nil]): void</code></p>
+<h3 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">State</span> <span class="o">=</span> <span class="n">BasicState</span><span class="p">.</span><span class="n">new</span><span class="p">({</span>
+    <span class="n">Money</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="p">})</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">BuyItem</span><span class="p">(</span><span class="n">ItemName</span><span class="p">,</span> <span class="n">ItemPrice</span><span class="p">)</span>
+    <span class="c1">-- A cap of 0 was specified to prevent Money from going below 0</span>
+    <span class="n">State</span><span class="p">:</span><span class="n">Decrement</span><span class="p">(</span><span class="s2">&quot;Money&quot;</span><span class="p">,</span> <span class="n">ItemPrice</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;Bought %s for %d&quot;</span><span class="p">,</span> <span class="n">ItemName</span><span class="p">,</span> <span class="n">ItemPrice</span><span class="p">))</span>
+<span class="kr">end</span>
+
+<span class="n">BuyItem</span><span class="p">(</span><span class="s2">&quot;Noodles&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="staterawset"><code>State:RawSet()</code><a class="headerlink" href="#staterawset" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Sets a value in the store without firing any <code>.Changed</code> (or <code>:GetChangedSignal</code>) events. <code>:RawSet()</code> will also ignore the value of <code>ProtectType</code>, so be careful when dealing with type-sensitive data.</p>
+<h3 id="syntax_8">Syntax<a class="headerlink" href="#syntax_8" title="Permanent link">&para;</a></h3>
+<p><code>State:RawSet(Key: any, Value: any): void</code></p>
+<h2 id="stateget"><code>State:Get()</code><a class="headerlink" href="#stateget" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Retrieves a value stored in the state. If <code>DefaultValue</code> is specified, it will return that if the entry does not exist (or is equal to <code>nil</code>).</p>
+<h3 id="syntax_9">Syntax<a class="headerlink" href="#syntax_9" title="Permanent link">&para;</a></h3>
+<p><code>State:Get(Key: any[, DefaultValue: any = nil]): any</code></p>
+<h2 id="stategetstate"><code>State:GetState()</code><a class="headerlink" href="#stategetstate" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Returns the full state object. A new table is returned, rather than a reference to the internal state object. This prevents directly overwriting the state. You should always use the <code>:Set()</code> method if you wish to mutate state.</p>
+<h3 id="syntax_10">Syntax<a class="headerlink" href="#syntax_10" title="Permanent link">&para;</a></h3>
+<p><code>State:GetState(): Dictionary&lt;any, any&gt;</code></p>
+<h2 id="stategetchangedsignal"><code>State:GetChangedSignal()</code><a class="headerlink" href="#stategetchangedsignal" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Returns an <a href="https://developer.roblox.com/en-us/api-reference/datatype/RBXScriptSignal">RBXScriptSignal</a> which is only fired when the value of the specified key is updated. The Event fires with the following values (in order):</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NewValue</code></td>
+<td><code>any</code></td>
+<td>The new value of the requested entry.</td>
+</tr>
+<tr>
+<td><code>OldValue</code></td>
+<td><code>any</code></td>
+<td>The value of the entry prior to mutation.</td>
+</tr>
+<tr>
+<td><code>OldState</code></td>
+<td><code>Dictionary&lt;any, any&gt;</code></td>
+<td>The entire state object prior to mutation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="syntax_11">Syntax<a class="headerlink" href="#syntax_11" title="Permanent link">&para;</a></h3>
+<p><code>State:GetChangedSignal(Key: any): RBXScriptSignal</code></p>
+<h3 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">State</span> <span class="o">=</span> <span class="n">BasicState</span><span class="p">.</span><span class="n">new</span><span class="p">({</span>
+    <span class="n">Hello</span> <span class="o">=</span> <span class="s2">&quot;World&quot;</span>
+<span class="p">})</span>
+
+<span class="n">State</span><span class="p">:</span><span class="n">GetChangedSignal</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">):</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">NewValue</span><span class="p">,</span> <span class="n">OldValue</span><span class="p">,</span> <span class="n">OldState</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">OldValue</span><span class="p">)</span> <span class="c1">--&gt; &quot;World&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">NewValue</span><span class="p">)</span> <span class="c1">--&gt; &quot;Roblox&quot;</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">State</span><span class="p">:</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;Roblox&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="statedestroy"><code>State:Destroy()</code><a class="headerlink" href="#statedestroy" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Clears the current state and disconnects all connections.</p>
+<h3 id="syntax_12">Syntax<a class="headerlink" href="#syntax_12" title="Permanent link">&para;</a></h3>
+<p><code>State:Destroy(): void</code></p>
+<h2 id="stateroact"><code>State:Roact()</code><a class="headerlink" href="#stateroact" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Wraps a Roact component and injects BasicState into the component's state.</p>
+<div class="admonition tip">
+<p class="admonition-title">Experimental</p>
+<p>This feature is experimental! You may encounter bugs when using it; if so, please <a href="https://github.com/csqrl/BasicState/issues/new">submit an issue</a>.</p>
+</div>
+<h3 id="syntax_13">Syntax<a class="headerlink" href="#syntax_13" title="Permanent link">&para;</a></h3>
+<p><code>State:Roact(Component: Roact.Component[, Keys: any[] = nil]): Roact.Component</code></p>
+<h3 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">&para;</a></h3>
+<p>There's a full example within the <code>/examples</code> directory on how to use BasicState with Roact: <a href="https://github.com/csqrl/BasicState/tree/default/examples/roact-wrapped-counter"><code>examples/roact-wrapped-counter</code></a>.</p>
+<h2 id="statechanged"><code>State.Changed</code><a class="headerlink" href="#statechanged" title="Permanent link">&para;</a></h2>
+<hr />
+<p>An <a href="https://developer.roblox.com/en-us/api-reference/datatype/RBXScriptSignal">RBXScriptSignal</a> which is fired any time the state mutates. The Event fires with the following values (in order):</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using <code>:GetChangedSignal()</code> is the preferred method for listening to state changes.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OldState</code></td>
+<td><code>Dictionary&lt;any, any&gt;</code></td>
+<td>The entire state object prior to mutation.</td>
+</tr>
+<tr>
+<td><code>Key</code></td>
+<td><code>any</code></td>
+<td>The key of the entry which has mutated.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="syntax_14">Syntax<a class="headerlink" href="#syntax_14" title="Permanent link">&para;</a></h3>
+<p><code>State.Changed: RBXScriptSignal</code></p>
+<h3 id="example_6">Example<a class="headerlink" href="#example_6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">State</span> <span class="o">=</span> <span class="n">BasicState</span><span class="p">.</span><span class="n">new</span><span class="p">({</span>
+    <span class="n">Hello</span> <span class="o">=</span> <span class="s2">&quot;World&quot;</span>
+<span class="p">})</span>
+
+<span class="n">State</span><span class="p">.</span><span class="n">Changed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">OldState</span><span class="p">,</span> <span class="n">Key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Key</span><span class="p">)</span> <span class="c1">--&gt; &quot;Hello&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">OldState</span><span class="p">[</span><span class="n">Key</span><span class="p">])</span> <span class="c1">--&gt; &quot;World&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">State</span><span class="p">:</span><span class="n">Get</span><span class="p">(</span><span class="n">Key</span><span class="p">))</span> <span class="c1">--&gt; &quot;Roblox&quot;</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">State</span><span class="p">:</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;Roblox&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="stateprotecttype"><code>State.ProtectType</code><a class="headerlink" href="#stateprotecttype" title="Permanent link">&para;</a></h2>
+<hr />
+<p>A boolean value which determines whether strict type-checking is enabled on the state table. This prevents changing the type of stored data, e.g. from a number to a string. This is <strong>disabled</strong> by default.</p>
+<p>To enable type-safety, simply set this property to true after initialising a new BasicState instance: <code>State.ProtectType = true</code>.</p>
+<p>Using <code>:RawSet()</code> will ignore type-checking.</p>
+<h3 id="syntax_15">Syntax<a class="headerlink" href="#syntax_15" title="Permanent link">&para;</a></h3>
+<p><code>State.ProtectType: boolean</code></p>
+<h3 id="example_7">Example<a class="headerlink" href="#example_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">State</span> <span class="o">=</span> <span class="n">BasicState</span><span class="p">.</span><span class="n">new</span><span class="p">({</span>
+    <span class="n">Hello</span> <span class="o">=</span> <span class="s2">&quot;World&quot;</span>
+<span class="p">})</span>
+
+<span class="n">State</span><span class="p">.</span><span class="n">ProtectType</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">State</span><span class="p">:</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span> <span class="c1">--&gt; Will throw an error: A string was expected, but it received a number.</span>
+</code></pre></div>
+<h2 id="statenone"><code>State.None</code><a class="headerlink" href="#statenone" title="Permanent link">&para;</a></h2>
+<hr />
+<p>Lua is unable to determine whether a value in a table is <code>nil</code> or <code>undefined</code>, and removes <code>nil</code> values from tables as a result. <code>State.None</code> is designed to stand in to enable you to remove keys from the state object, which was previously impossible without. It can be used directly with <code>:Set</code>, <code>:SetState</code> or <code>:RawSet</code>, or by using <code>:Delete</code> to remove a single key.</p>
+<h3 id="syntax_16">Syntax<a class="headerlink" href="#syntax_16" title="Permanent link">&para;</a></h3>
+<p><code>State.None: userdata</code></p>
+<h3 id="example_8">Example<a class="headerlink" href="#example_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">State</span><span class="p">:</span><span class="n">Delete</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">State</span><span class="p">:</span><span class="n">SetState</span><span class="p">({</span>
+    <span class="n">Hello</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">None</span><span class="p">,</span>
+<span class="p">})</span>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../example/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Examples
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/csqrl/" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.6a3d08fc.min.js"></script>
+      <script src="../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
