@@ -1,11 +1,11 @@
 [package]
 name = "csqrl/basicstate"
 description = "Really simple state management"
-version = "0.2.3"
+version = "0.2.4"
 license = "MIT"
 authors = ["csqrl (https://csqrl.dev)"]
-contributors = ["boatbomber", "rimuy", "gaffal"]
-registry = "https://github.com/UpliftGames/wally-index"
+contributors = ["boatbomber", "rimuy", "gaffal", "mkargus"]
+registry = "https://github.com/upliftgames/wally-index"
 realm = "shared"
 
 [dev-dependencies]
